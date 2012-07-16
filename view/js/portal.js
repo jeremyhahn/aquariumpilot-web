@@ -31,7 +31,9 @@ Ext.define('Ext.app.Portal', {
     },
 
     initComponent: function(){
-        var content = '<div class="portlet-content">'+Ext.example.shortBogusMarkup+'</div>';
+        
+    	//var content = '<div class="portlet-content">'+Ext.example.shortBogusMarkup+'</div>';
+    	var content = '<div class="portlet-content">AquariumPilot</div>';
 
         Ext.apply(this, {
             id: 'app-viewport',
@@ -82,7 +84,7 @@ Ext.define('Ext.app.Portal', {
                     region: 'center',
                     items: [{
                         id: 'col-1',
-                        items: [{
+                        items: [/*{
                             id: 'portlet-1',
                             title: 'Grid Portlet',
                             tools: this.getTools(),
@@ -90,50 +92,57 @@ Ext.define('Ext.app.Portal', {
                             listeners: {
                                 'close': Ext.bind(this.onPortletClose, this)
                             }
-                        }, {
+                        },*/ {
                             id: 'portlet-2',
                             title: 'GFCI Outlets',
                             //tools: this.getTools(),
                             items: [{
-                            	id: 'outlet1',
-                            	xtype: 'button',
-                            	text: 'Socket 1',
-                            	enableToggle: true
-                            }, {
-                            	id: 'outlet2',
-                            	xtype: 'button',
-                            	text: 'Socket 2',
-                            	enableToggle: true
-                            }, {
-                            	id: 'outlet3',
-                            	xtype: 'button',
-                            	text: 'Socket 3',
-                            	enableToggle: true
-                            }, {
-                            	id: 'outlet4',
-                            	xtype: 'button',
-                            	text: 'Socket 4',
-                            	enableToggle: true
-                            }, {
-                            	id: 'outlet5',
-                            	xtype: 'button',
-                            	text: 'Socket 5',
-                            	enableToggle: true
-                            }, {
-                            	id: 'outlet6',
-                            	xtype: 'button',
-                            	text: 'Socket 6',
-                            	enableToggle: true
-                            }, {
-                            	id: 'outlet7',
-                            	xtype: 'button',
-                            	text: 'Socket 7',
-                            	enableToggle: true
-                            }, {
-                            	id: 'outlet8',
-                            	xtype: 'button',
-                            	text: 'Socket 8',
-                            	enableToggle: true
+                            	id: 'gfci-outlets-panel',
+                            	items: [{
+	                            	id: 'outlet1',
+	                            	xtype: 'button',
+	                            	text: 'Socket 1',
+	                            	enableToggle: true
+	                            }, {
+	                            	id: 'outlet2',
+	                            	xtype: 'button',
+	                            	text: 'Socket 2',
+	                            	enableToggle: true
+	                            }, {
+	                            	id: 'outlet3',
+	                            	xtype: 'button',
+	                            	text: 'Socket 3',
+	                            	enableToggle: true
+	                            }, {
+	                            	id: 'outlet4',
+	                            	xtype: 'button',
+	                            	text: 'Socket 4 / RO/DI UV',
+	                            	enableToggle: true
+	                            }, {
+	                            	id: 'outlet5',
+	                            	xtype: 'button',
+	                            	text: 'Socket 5 - Reservoir Powerhead',
+	                            	enableToggle: true
+	                            }, {
+	                            	id: 'outlet6',
+	                            	xtype: 'button',
+	                            	text: 'Socket 6 - Reservoir -> Aquarium',
+	                            	enableToggle: true
+	                            }, {
+	                            	id: 'outlet7',
+	                            	xtype: 'button',
+	                            	text: 'Socket 7 - Air Pump',
+	                            	enableToggle: true
+	                            }, {
+	                            	id: 'outlet8',
+	                            	xtype: 'button',
+	                            	text: 'Socket 8',
+	                            	enableToggle: true
+	                            }, {
+	                            	id: 'p1',
+	                            	xtype: 'container',
+	                            	html: '<div><canvas id="saltwater-reservoir-thermometer" width="150" height="350">[No canvas support]</canvas></div>'	                            	
+                            	}]
                             }],
                             listeners: {
                                 'close': Ext.bind(this.onPortletClose, this)
@@ -145,14 +154,15 @@ Ext.define('Ext.app.Portal', {
                             id: 'portlet-3',
                             title: 'Portlet 3',
                             tools: this.getTools(),
-                            html: '<div class="portlet-content">'+Ext.example.bogusMarkup+'</div>',
+                            html: '<div class="portlet-content">'+content+'</div>',
                             listeners: {
                                 'close': Ext.bind(this.onPortletClose, this)
                             }
                         }]
                     },{
                         id: 'col-3',
-                        items: [{
+                        items: [
+                                /*{
                             id: 'portlet-4',
                             title: 'Stock Portlet',
                             tools: this.getTools(),
@@ -160,7 +170,7 @@ Ext.define('Ext.app.Portal', {
                             listeners: {
                                 'close': Ext.bind(this.onPortletClose, this)
                             }
-                        }]
+                        }*/]
                     }]
                 }]
             }]

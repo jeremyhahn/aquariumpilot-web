@@ -13,21 +13,7 @@ try {
 	AgilePHP::init();
     AgilePHP::setDefaultTimezone('America/New_York');
     AgilePHP::setDebugMode(true);
-	AgilePHP::setAppName('AquariumPilot');
-
-	/*
-	$fields = array('realPower1', 'apparentPower1', 'powerFactor1', 'Vrms1', 'Irms1', 'whInc1', 'wh1',
-	                'realPower2', 'apparentPower2', 'powerFactor2', 'Vrms2', 'Irms2', 'whInc2', 'wh2'); 
-	
-
-	$fields = array('realPower', 'apparentPower', 'powerFactor', 'Vrms', 'Irms', 'whInc', 'wh');
-	$gen = new ModelGenerator(null, 'Channel',
-			 $fields,
-			 true,
-			 true);
-			 echo $gen->createModel();
-			 exit;
-	*/
+	AgilePHP::setAppName('AquariumPilot v1.0');
 
 	MVC::dispatch();
 }

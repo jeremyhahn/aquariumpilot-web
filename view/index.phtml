@@ -5,8 +5,13 @@
 		<link href="/view/css/style.css" type="text/css" rel="stylesheet"/>
 		<link rel="stylesheet" type="text/css" href="/view/js/extjs/resources/css/ext-all.css" />
     	<link rel="stylesheet" type="text/css" href="/view/css/portal.css" />
-    	
 
+		<!-- RGraph -->
+		<script src="/view/js/RGraph/libraries/RGraph.common.core.js" ></script>
+        <script src="/view/js/RGraph/libraries/RGraph.common.effects.js" ></script>
+        <script src="/view/js/RGraph/libraries/RGraph.thermometer.js" ></script>
+    	
+    	<!-- ExtJS -->
 		<script type="text/javascript" src="/view/js/extjs/ext.js"></script>
 		<script type="text/javascript" src="/view/js/all-classes.js"></script>
 		
@@ -47,9 +52,102 @@
                 'Ext.app.GridPortlet',
                 'Ext.app.ChartPortlet'
             ]);
-    
+
             Ext.onReady(function(){
+
                 Ext.create('Ext.app.Portal');
+
+                // Saltwater Reservoir Thermometer
+                var thermometer = new RGraph.Thermometer('saltwater-reservoir-thermometer', 0, 100, 75);
+                thermometer.Set('chart.gutter.left', 45);
+                thermometer.Set('chart.gutter.right', 45);
+                thermometer.Set('chart.colors', ['rgba(255,0,0,1)']);
+                thermometer.Draw();
+
+                // Get initial button states for saltwater reservoir GFCI outlets
+                Ext.Ajax.request({
+                    method: 'GET',
+                    url: '/index.php/WaterworksController/getButtonStates',
+                    params: {},
+                    success: function(result, request) {
+
+                        var pinValues = Ext.decode(result.responseText);
+
+                        if(pinValues[0]) Ext.getCmp('outlet1').toggle(true);
+                        if(pinValues[1]) Ext.getCmp('outlet2').toggle(true);
+                        if(pinValues[2]) Ext.getCmp('outlet3').toggle(true);
+                        if(pinValues[3]) Ext.getCmp('outlet4').toggle(true);
+                        if(pinValues[4]) Ext.getCmp('outlet5').toggle(true);
+                        if(pinValues[5]) Ext.getCmp('outlet6').toggle(true);
+                        if(pinValues[6]) Ext.getCmp('outlet7').toggle(true);
+                        if(pinValues[7]) Ext.getCmp('outlet8').toggle(true);
+
+                        // Set event handlers for button clicks / toggles
+                        Ext.getCmp('outlet1').on('toggle', function(button, pressed) {
+                            var value = pressed ? '1' : '0';
+                        	Ext.Ajax.request({
+                                method: 'GET',
+                                url: '/index.php/WaterworksController/setSocket1/' + value
+                        	});
+                        });
+
+                        Ext.getCmp('outlet2').on('toggle', function(button, pressed) {
+                            var value = pressed ? '1' : '0';
+                        	Ext.Ajax.request({
+                                method: 'GET',
+                                url: '/index.php/WaterworksController/setSocket2/' + value
+                        	});
+                        });
+
+                        Ext.getCmp('outlet3').on('toggle', function(button, pressed) {
+                            var value = pressed ? '1' : '0';
+                        	Ext.Ajax.request({
+                                method: 'GET',
+                                url: '/index.php/WaterworksController/setSocket3/' + value
+                        	});
+                        });
+
+                        Ext.getCmp('outlet4').on('toggle', function(button, pressed) {
+                            var value = pressed ? '1' : '0';
+                        	Ext.Ajax.request({
+                                method: 'GET',
+                                url: '/index.php/WaterworksController/setSocket4/' + value
+                        	});
+                        });
+
+                        Ext.getCmp('outlet5').on('toggle', function(button, pressed) {
+                            var value = pressed ? '1' : '0';
+                        	Ext.Ajax.request({
+                                method: 'GET',
+                                url: '/index.php/WaterworksController/setSocket5/' + value
+                        	});
+                        });
+
+                        Ext.getCmp('outlet6').on('toggle', function(button, pressed) {
+                            var value = pressed ? '1' : '0';
+                        	Ext.Ajax.request({
+                                method: 'GET',
+                                url: '/index.php/WaterworksController/setSocket6/' + value
+                        	});
+                        });
+
+                        Ext.getCmp('outlet7').on('toggle', function(button, pressed) {
+                            var value = pressed ? '1' : '0';
+                        	Ext.Ajax.request({
+                                method: 'GET',
+                                url: '/index.php/WaterworksController/setSocket7/' + value
+                        	});
+                        });
+
+                        Ext.getCmp('outlet8').on('toggle', function(button, pressed) {
+                            var value = pressed ? '1' : '0';
+                        	Ext.Ajax.request({
+                                method: 'GET',
+                                url: '/index.php/WaterworksController/setSocket8/' + value
+                        	});
+                        });
+                    }
+                });
             });
         </script>
 	</head>
