@@ -138,6 +138,21 @@ Ext.define('Ext.app.Portal', {
 	                            	xtype: 'button',
 	                            	text: 'Socket 8',
 	                            	enableToggle: true
+	                            },  {
+	                            	id: 'rodiAquarium',
+	                            	xtype: 'button',
+	                            	text: 'RO/DO -> Aquarium',
+	                            	enableToggle: true
+	                            },  {
+	                            	id: 'rodiReservoir',
+	                            	xtype: 'button',
+	                            	text: 'RO/DI -> Saltwater Reservoir',
+	                            	enableToggle: true
+	                            },  {
+	                            	id: 'aquariumDrain',
+	                            	xtype: 'button',
+	                            	text: 'Aquarium -> Drain',
+	                            	enableToggle: true
 	                            }, {
 	                            	id: 'p1',
 	                            	xtype: 'container',

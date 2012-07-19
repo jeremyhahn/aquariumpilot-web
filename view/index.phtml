@@ -146,6 +146,30 @@
                                 url: '/index.php/WaterworksController/setSocket8/' + value
                         	});
                         });
+
+                        Ext.getCmp('rodiAquarium').on('toggle', function(button, pressed) {
+                            var value = pressed ? '1' : '0';
+                        	Ext.Ajax.request({
+                                method: 'GET',
+                                url: '/index.php/WaterworksController/setRodiAquarium/' + value
+                        	});
+                        });
+
+                        Ext.getCmp('rodiReservoir').on('toggle', function(button, pressed) {
+                            var value = pressed ? '1' : '0';
+                        	Ext.Ajax.request({
+                                method: 'GET',
+                                url: '/index.php/WaterworksController/setRodiReservoir/' + value
+                        	});
+                        });
+
+                        Ext.getCmp('aquariumDrain').on('toggle', function(button, pressed) {
+                            var value = pressed ? '1' : '0';
+                        	Ext.Ajax.request({
+                                method: 'GET',
+                                url: '/index.php/WaterworksController/setAquariumDrain/' + value
+                        	});
+                        });
                     }
                 });
             });
