@@ -57,11 +57,30 @@
 
                 Ext.create('Ext.app.Portal');
 
-                // Saltwater Reservoir Thermometer
-                var thermometer = new RGraph.Thermometer('saltwater-reservoir-thermometer', 0, 100, 75);
+                function getThermometerColor(temp) {
+
+                	return temp < 80 ? ['rgba(0,0,255,1)'] : ['rgba(255,0,0,1)'];
+                }
+                
+             	// Aquarium water temperature
+                var thermometer = new RGraph.Thermometer('aquarium-water-thermometer', 0, 100, <?php echo $aquarium_water_temp; ?>);
                 thermometer.Set('chart.gutter.left', 45);
                 thermometer.Set('chart.gutter.right', 45);
-                thermometer.Set('chart.colors', ['rgba(255,0,0,1)']);
+                thermometer.Set('chart.colors', getThermometerColor(<?php echo $aquarium_water_temp; ?>));
+                thermometer.Draw();
+
+             	// Air water temperature
+                var thermometer = new RGraph.Thermometer('aquarium-air-thermometer', 0, 100, <?php echo $aquarium_air_temp; ?>);
+                thermometer.Set('chart.gutter.left', 45);
+                thermometer.Set('chart.gutter.right', 45);
+                thermometer.Set('chart.colors', getThermometerColor(<?php echo $aquarium_air_temp; ?>));
+                thermometer.Draw();
+
+                // Saltwater Reservoir Temperature
+                var thermometer = new RGraph.Thermometer('waterworks-reservoir-thermometer', 0, 100, <?php echo $waterworks_reservoir_temp; ?>);
+                thermometer.Set('chart.gutter.left', 45);
+                thermometer.Set('chart.gutter.right', 45);
+                thermometer.Set('chart.colors', getThermometerColor(<?php echo $waterworks_reservoir_temp; ?>));
                 thermometer.Draw();
 
                 // Get initial button states for saltwater reservoir GFCI outlets

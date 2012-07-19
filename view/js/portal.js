@@ -131,7 +131,7 @@ Ext.define('Ext.app.Portal', {
 	                            }, {
 	                            	id: 'outlet7',
 	                            	xtype: 'button',
-	                            	text: 'Socket 7 - Air Pump',
+	                            	text: 'Socket 7 - Reservoir Air Pump',
 	                            	enableToggle: true
 	                            }, {
 	                            	id: 'outlet8',
@@ -141,7 +141,7 @@ Ext.define('Ext.app.Portal', {
 	                            },  {
 	                            	id: 'rodiAquarium',
 	                            	xtype: 'button',
-	                            	text: 'RO/DO -> Aquarium',
+	                            	text: 'RO/DI -> Aquarium',
 	                            	enableToggle: true
 	                            },  {
 	                            	id: 'rodiReservoir',
@@ -154,9 +154,8 @@ Ext.define('Ext.app.Portal', {
 	                            	text: 'Aquarium -> Drain',
 	                            	enableToggle: true
 	                            }, {
-	                            	id: 'p1',
 	                            	xtype: 'container',
-	                            	html: '<div><canvas id="saltwater-reservoir-thermometer" width="150" height="350">[No canvas support]</canvas></div>'	                            	
+	                            	html: '<div><canvas id="waterworks-reservoir-thermometer" width="150" height="350">[No canvas support]</canvas></div>'	                            	
                             	}]
                             }],
                             listeners: {
@@ -167,9 +166,43 @@ Ext.define('Ext.app.Portal', {
                         id: 'col-2',
                         items: [{
                             id: 'portlet-3',
-                            title: 'Portlet 3',
+                            title: 'Aquarium',
                             tools: this.getTools(),
-                            html: '<div class="portlet-content">'+content+'</div>',
+                            layout: 'column',
+                            items: [{
+                            	xtype: 'panel',
+                            	title: 'Water Temperature',
+                            	html: '<div><canvas id="aquarium-water-thermometer" width="150" height="350">[No canvas support]</canvas></div>'
+                            }, {
+                            	xtype: 'panel',
+                            	title: 'Surface Temperature',
+                            	html: '<div><canvas id="aquarium-air-thermometer" width="150" height="350">[No canvas support]</canvas></div>'
+                            }],
+                                    
+                                /*    
+                                {
+                            	columnWidth: .33,
+                            	layout: 'form',
+                            	items: [{
+                                    xtype: 'label',
+                                    text: 'Aquarium Temp: ',
+                                    anchor: '95%',
+                                    boxLabel: 'Known'
+                            	}],
+                            	columnWidth: .33,
+                            	layout: 'form',
+                            	items: [{
+                            		id: 'aquarium-temp',
+                            		xtype: 'label',
+                            		text: 'N/A'
+                            	}],
+                            	columnWidth: .33,
+                            	layout: 'form',
+                            	items: [{
+                            		xtype: 'label',
+                            		text: 'test'
+                            	}*/
+                            
                             listeners: {
                                 'close': Ext.bind(this.onPortletClose, this)
                             }
