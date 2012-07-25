@@ -93,11 +93,12 @@ Ext.define('Ext.app.Portal', {
                                 'close': Ext.bind(this.onPortletClose, this)
                             }
                         },*/ {
-                            id: 'portlet-2',
-                            title: 'GFCI Outlets',
-                            //tools: this.getTools(),
+                            id: 'portlet-waterworks',
+                            title: 'Waterworks',
+                            tools: this.getTools(),
+                            width: 400,
                             items: [{
-                            	id: 'gfci-outlets-panel',
+                            	id: 'waterworks-panel',
                             	items: [{
 	                            	id: 'outlet1',
 	                            	xtype: 'button',
@@ -154,9 +155,20 @@ Ext.define('Ext.app.Portal', {
 	                            	text: 'Aquarium -> Drain',
 	                            	enableToggle: true
 	                            }, {
-	                            	xtype: 'container',
-	                            	html: '<div><canvas id="waterworks-reservoir-thermometer" width="150" height="350">[No canvas support]</canvas></div>'	                            	
-                            	}]
+									xtype: 'container',
+									layout: 'column',
+									items: [{
+		                            	xtype: 'panel',
+		                            	title: 'Reservoir Temperature',
+		                            	width: 150,
+	                	            	html: '<div><canvas id="waterworks-reservoir-thermometer" width="110" height="350">[No canvas support]</canvas></div>'	                            	
+                            		 }, {
+                            			 xtype: 'panel',
+                            			 title: 'Room Temperature',
+                            			 width: 150,
+                            			 html: '[Need additional sensor]'
+                            		 }]
+	                            }]
                             }],
                             listeners: {
                                 'close': Ext.bind(this.onPortletClose, this)
@@ -164,21 +176,29 @@ Ext.define('Ext.app.Portal', {
                         }]
                     },{
                         id: 'col-2',
+                        layout: 'fit',
                         items: [{
-                            id: 'portlet-3',
+                            id: 'portlet-aquarium',
                             title: 'Aquarium',
                             tools: this.getTools(),
                             layout: 'column',
+                            minWidth: 450,
                             items: [{
                             	xtype: 'panel',
                             	title: 'Water Temperature',
-                            	html: '<div><canvas id="aquarium-water-thermometer" width="150" height="350">[No canvas support]</canvas></div>'
+                            	width: 150,
+                            	html: '<div><canvas id="aquarium-water-thermometer" width="110" height="350">[No canvas support]</canvas></div>'
                             }, {
                             	xtype: 'panel',
                             	title: 'Surface Temperature',
-                            	html: '<div><canvas id="aquarium-air-thermometer" width="150" height="350">[No canvas support]</canvas></div>'
-                            }],
-                                    
+                            	width: 150,
+                            	html: '<div><canvas id="aquarium-air-thermometer" width="110" height="350">[No canvas support]</canvas></div>'
+                            }, {
+								xtype: 'panel',
+								title: 'Room Temperature',
+								width: 150,
+								html: '[Need additional sensor]',
+							    }],
                                 /*    
                                 {
                             	columnWidth: .33,
