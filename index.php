@@ -13,7 +13,21 @@ try {
     AgilePHP::setDefaultTimezone('America/New_York');
     AgilePHP::setDebugMode(true);
 	AgilePHP::setAppName('AquariumPilot v1.0');
-
+/*
+	$fields = array('outlet1', 'outlet2', 'outlet3', 'outlet4', 'outlet5', 'outlet6', 'outlet7',
+	                'outlet8', 'rodiAquariumSolenoid', 'rodiReservoirSolenoid', 'aquariumDrainSolenoid',
+	                'upperFloatValve', 'lowerFloatValve', 'reservoirTemp', 'waterChangeInProgress',
+	 				'wcTotalGallons', 'wcCycle', 'wcDrainTimerId', 'wcDrainTimerEnabled', 'wcFillTimerId',
+	                'wcCycle', 'wcTotalGallons', 'wcCycle', 'wcDrainTimerId', 'wcDailyTimerEnabled', 'wcCycle',
+	                'activeTimers', 'maintenanceInProgress'); 
+	
+	$gen = new ModelGenerator(null, 'Status',
+			 $fields,
+			 true,
+			 true);
+			 echo $gen->createModel();
+			 exit;
+*/
 	MVC::dispatch();
 }
 catch( FrameworkException $e ) {

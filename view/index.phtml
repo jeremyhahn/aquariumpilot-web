@@ -5,6 +5,7 @@
 		<link href="/view/css/style.css" type="text/css" rel="stylesheet"/>
 		<link rel="stylesheet" type="text/css" href="/view/js/extjs/resources/css/ext-all.css" />
     	<link rel="stylesheet" type="text/css" href="/view/css/portal.css" />
+    	<link rel="stylesheet" type="text/css" href="/view/css/app.css" />
 
 		<!-- RGraph -->
 		<script src="/view/js/RGraph/libraries/RGraph.common.core.js" ></script>
@@ -32,6 +33,7 @@
         -->
 
 		<script type="text/javascript" src="/view/js/portal.js"></script>
+		<script type="text/javascript" src="/view/js/window-waterchange.js"></script>
         <script type="text/javascript">
             Ext.Loader.setPath('Ext.app', 'classes');
     
@@ -44,6 +46,7 @@
                 'Ext.fx.target.Element',
                 'Ext.fx.target.Component',
                 'Ext.window.Window',
+                'Ext.window.MessageBox',
                 'Ext.app.Portlet',
                 'Ext.app.PortalColumn',
                 'Ext.app.PortalPanel',
@@ -54,69 +57,71 @@
             ]);
 
             Ext.onReady(function(){
-
                 Ext.create('Ext.app.Portal');
+                pollWaterworks();
+            });
 
+            function pollWaterworks() {
+                
                 function getThermometerColor(temp) {
-
+    
                 	//return temp < 80 ? ['rgba(0,0,255,1)'] : ['rgba(255,0,0,1)'];
-
+    
                 	var grad = thermometer.context.createLinearGradient(15,0,85,0);
-
+    
                 	if(temp < 80) {
-
+    
                         grad.addColorStop(0,'blue');
                         grad.addColorStop(0.5,'#99f');
                         grad.addColorStop(1,'blue');
                 	}
                 	else {
-
+    
                         grad.addColorStop(0,'red');
                         grad.addColorStop(0.5,'#E97');
                         grad.addColorStop(1,'red');
                 	}
-
+    
                 	return [grad];
                 }
-
+    
              	// Aquarium water temperature
                 var thermometer = new RGraph.Thermometer('aquarium-water-thermometer', 0, 100, <?php echo $aquarium_water_temp; ?>);
                 thermometer.Set('chart.colors', getThermometerColor(<?php echo $aquarium_water_temp; ?>));
-		        thermometer.Set('chart.scale.decimals', 2);
+    	        thermometer.Set('chart.scale.decimals', 2);
                 thermometer.Draw();
-
+    
             	// Aquarium water surface temperature
                 var thermometer2 = new RGraph.Thermometer('aquarium-air-thermometer', 0, 100, <?php echo $aquarium_air_temp; ?>);
                 thermometer2.Set('chart.colors', getThermometerColor(<?php echo $aquarium_air_temp; ?>));
                 thermometer2.Set('chart.scale.decimals', 2);
                 thermometer2.Draw();
-
+    
                 // Saltwater Reservoir Temperature
                 var thermometer3 = new RGraph.Thermometer('waterworks-reservoir-thermometer', 0, 100, <?php echo $waterworks_reservoir_temp; ?>);
                 thermometer3.Set('chart.colors', getThermometerColor(<?php echo $waterworks_reservoir_temp; ?>));
                 thermometer3.Set('chart.scale.decimals', 2);
                 thermometer3.Draw();
-
-                // Get initial button states for saltwater reservoir GFCI outlets
+    
                 Ext.Ajax.request({
                     method: 'GET',
                     url: '/index.php/WaterworksController/getButtonStates',
                     params: {},
                     success: function(result, request) {
-
+    
                         var pinValues = Ext.decode(result.responseText);
-
-                        if(pinValues[0]) Ext.getCmp('outlet1').toggle(true);
-                        if(pinValues[1]) Ext.getCmp('outlet2').toggle(true);
-                        if(pinValues[2]) Ext.getCmp('outlet3').toggle(true);
-                        if(pinValues[3]) Ext.getCmp('outlet4').toggle(true);
-                        if(pinValues[4]) Ext.getCmp('outlet5').toggle(true);
-                        if(pinValues[5]) Ext.getCmp('outlet6').toggle(true);
-                        if(pinValues[6]) Ext.getCmp('outlet7').toggle(true);
-                        if(pinValues[7]) Ext.getCmp('outlet8').toggle(true);
-                        if(pinValues[8]) Ext.getCmp('rodiAquarium').toggle(true);
-                        if(pinValues[9]) Ext.getCmp('rodiReservoir').toggle(true);
-                        if(pinValues[10]) Ext.getCmp('aquariumDrain').toggle(true);
+    
+                        if(pinValues[0]) Ext.getCmp('outlet1').toggle(true, true);
+                        if(pinValues[1]) Ext.getCmp('outlet2').toggle(true, true);
+                        if(pinValues[2]) Ext.getCmp('outlet3').toggle(true, true);
+                        if(pinValues[3]) Ext.getCmp('outlet4').toggle(true, true);
+                        if(pinValues[4]) Ext.getCmp('outlet5').toggle(true, true);
+                        if(pinValues[5]) Ext.getCmp('outlet6').toggle(true, true);
+                        if(pinValues[6]) Ext.getCmp('outlet7').toggle(true, true);
+                        if(pinValues[7]) Ext.getCmp('outlet8').toggle(true, true);
+                        if(pinValues[8]) Ext.getCmp('rodiAquarium').toggle(true, true);
+                        if(pinValues[9]) Ext.getCmp('rodiReservoir').toggle(true, true);
+                        if(pinValues[10]) Ext.getCmp('aquariumDrain').toggle(true, true);
 
                         // Set event handlers for button clicks / toggles
                         Ext.getCmp('outlet1').on('toggle', function(button, pressed) {
@@ -126,7 +131,7 @@
                                 url: '/index.php/WaterworksController/setSocket1/' + value
                         	});
                         });
-
+    
                         Ext.getCmp('outlet2').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -134,7 +139,7 @@
                                 url: '/index.php/WaterworksController/setSocket2/' + value
                         	});
                         });
-
+    
                         Ext.getCmp('outlet3').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -142,7 +147,7 @@
                                 url: '/index.php/WaterworksController/setSocket3/' + value
                         	});
                         });
-
+    
                         Ext.getCmp('outlet4').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -150,7 +155,7 @@
                                 url: '/index.php/WaterworksController/setSocket4/' + value
                         	});
                         });
-
+    
                         Ext.getCmp('outlet5').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -158,7 +163,7 @@
                                 url: '/index.php/WaterworksController/setSocket5/' + value
                         	});
                         });
-
+    
                         Ext.getCmp('outlet6').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -166,7 +171,7 @@
                                 url: '/index.php/WaterworksController/setSocket6/' + value
                         	});
                         });
-
+    
                         Ext.getCmp('outlet7').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -174,7 +179,7 @@
                                 url: '/index.php/WaterworksController/setSocket7/' + value
                         	});
                         });
-
+    
                         Ext.getCmp('outlet8').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -182,7 +187,7 @@
                                 url: '/index.php/WaterworksController/setSocket8/' + value
                         	});
                         });
-
+    
                         Ext.getCmp('rodiAquarium').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -190,7 +195,7 @@
                                 url: '/index.php/WaterworksController/setRodiAquarium/' + value
                         	});
                         });
-
+    
                         Ext.getCmp('rodiReservoir').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -198,7 +203,7 @@
                                 url: '/index.php/WaterworksController/setRodiReservoir/' + value
                         	});
                         });
-
+    
                         Ext.getCmp('aquariumDrain').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -208,7 +213,9 @@
                         });
                     }
                 });
-            });
+
+                setTimeout('pollWaterworks()', 30000);
+            }
         </script>
 	</head>
 	<body>

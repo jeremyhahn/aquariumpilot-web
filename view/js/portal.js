@@ -45,8 +45,8 @@ Ext.define('Ext.app.Portal', {
                 id: 'app-header',
                 xtype: 'box',
                 region: 'north',
-                height: 40,
-                html: 'AquariumPilot'
+                height: 60,//<p style="clear: both;"> </p>
+                html: '<div style="float: left;"><img src="/view/images/48x48/logo.png"/></div><div style="padding: 10 0 0 60"><h3>AquariumPilot</h3></div>'
             },{
                 xtype: 'container',
                 region: 'center',
@@ -98,65 +98,158 @@ Ext.define('Ext.app.Portal', {
                             tools: this.getTools(),
                             width: 400,
                             items: [{
-                            	id: 'waterworks-panel',
+                            	xtype: 'toolbar',
                             	items: [{
+                            		xtype: 'button',
+                            		iconCls: 'btn-water',
+                            		text: 'Water Change',
+                            		listeners: {
+                            			click: function(btn, event) {
+		                            		Ext.Msg.prompt('Water Change', 'How many gallons?', function(btn, text){
+		                            		    if (btn == 'ok') {
+		                            		    	if(isNaN(text)) {
+		                            		    		Ext.Msg.show({
+		                            		    		     title:'Error',
+		                            		    		     msg: 'Number required.',
+		                            		    		     buttons: Ext.Msg.OK,
+		                            		    		     icon: Ext.Msg.ERROR
+		                            		    		});
+		                            		    		return false;
+		                            		    	}
+		                            		    	if(text <= 0) {
+		                            		    		Ext.Msg.show({
+		                            		    		     title:'Error',
+		                            		    		     msg: 'Gallons must be greater than zero.',
+		                            		    		     buttons: Ext.Msg.OK,
+		                            		    		     icon: Ext.Msg.ERROR
+		                            		    		});
+		                            		    		return false;
+		                            		    	}
+		                            		    	Ext.Ajax.request({
+		                                                method: 'GET',
+		                                                url: '/index.php/WaterworksController/waterchange/' + text
+		                                        	});
+		                            		    }
+		                            		});
+                            			}
+                            		}
+                            	}]
+                            }, {
+                            	id: 'waterworks-panel',
+                            	xtype: 'panel',
+                            	title: '120 VAC Receptacles',
+                            	style: {
+                            		paddingTop: 5
+                            	},
+                            	items: [{
+	                            	xtype: 'container',
+	                            	height: 5
+	                            }, {
 	                            	id: 'outlet1',
 	                            	xtype: 'button',
 	                            	text: 'Socket 1',
+	                            	iconCls: 'outlet',
 	                            	enableToggle: true
+	                            }, {
+	                            	xtype: 'container',
+	                            	height: 5
 	                            }, {
 	                            	id: 'outlet2',
 	                            	xtype: 'button',
 	                            	text: 'Socket 2',
+	                            	iconCls: 'outlet',
 	                            	enableToggle: true
+	                            }, {
+	                            	xtype: 'container',
+	                            	height: 5
 	                            }, {
 	                            	id: 'outlet3',
 	                            	xtype: 'button',
 	                            	text: 'Socket 3',
+	                            	iconCls: 'outlet',
 	                            	enableToggle: true
+	                            }, {
+	                            	xtype: 'container',
+	                            	height: 5
 	                            }, {
 	                            	id: 'outlet4',
 	                            	xtype: 'button',
 	                            	text: 'Socket 4 / RO/DI UV',
+	                            	iconCls: 'outlet',
 	                            	enableToggle: true
+	                            }, {
+	                            	xtype: 'container',
+	                            	height: 5
 	                            }, {
 	                            	id: 'outlet5',
 	                            	xtype: 'button',
 	                            	text: 'Socket 5 - Reservoir Powerhead',
+	                            	iconCls: 'outlet',
 	                            	enableToggle: true
+	                            }, {
+	                            	xtype: 'container',
+	                            	height: 5
 	                            }, {
 	                            	id: 'outlet6',
 	                            	xtype: 'button',
 	                            	text: 'Socket 6 - Reservoir -> Aquarium',
+	                            	iconCls: 'outlet',
 	                            	enableToggle: true
+	                            }, {
+	                            	xtype: 'container',
+	                            	height: 5
 	                            }, {
 	                            	id: 'outlet7',
 	                            	xtype: 'button',
 	                            	text: 'Socket 7 - Reservoir Air Pump',
+	                            	iconCls: 'outlet',
 	                            	enableToggle: true
+	                            }, {
+	                            	xtype: 'container',
+	                            	height: 5
 	                            }, {
 	                            	id: 'outlet8',
 	                            	xtype: 'button',
 	                            	text: 'Socket 8',
+	                            	iconCls: 'outlet',
 	                            	enableToggle: true
-	                            },  {
-	                            	id: 'rodiAquarium',
-	                            	xtype: 'button',
-	                            	text: 'RO/DI -> Aquarium',
-	                            	enableToggle: true
-	                            },  {
-	                            	id: 'rodiReservoir',
-	                            	xtype: 'button',
-	                            	text: 'RO/DI -> Saltwater Reservoir',
-	                            	enableToggle: true
-	                            },  {
-	                            	id: 'aquariumDrain',
-	                            	xtype: 'button',
-	                            	text: 'Aquarium -> Drain',
-	                            	enableToggle: true
+	                            }, {
+	                            	xtype: 'panel',
+	                            	title: 'Solenoid Valves',
+	                            	items: [{
+		                            	xtype: 'container',
+		                            	height: 5
+		                            }, {
+		                            	id: 'rodiAquarium',
+		                            	xtype: 'button',
+		                            	text: 'RO/DI -> Aquarium',
+		                            	iconCls: 'valve',
+		                            	enableToggle: true
+		                            }, {
+		                            	xtype: 'container',
+		                            	height: 5
+		                            }, {
+		                            	id: 'rodiReservoir',
+		                            	xtype: 'button',
+		                            	text: 'RO/DI -> Saltwater Reservoir',
+		                            	iconCls: 'valve',
+		                            	enableToggle: true
+		                            }, {
+		                            	xtype: 'container',
+		                            	height: 5
+		                            }, {
+		                            	id: 'aquariumDrain',
+		                            	xtype: 'button',
+		                            	text: 'Aquarium -> Drain',
+		                            	iconCls: 'valve',
+		                            	enableToggle: true
+		                            }]
 	                            }, {
 									xtype: 'container',
 									layout: 'column',
+									style: {
+	                            		paddingTop: 5
+	                            	},
 									items: [{
 		                            	xtype: 'panel',
 		                            	title: 'Reservoir Temperature',

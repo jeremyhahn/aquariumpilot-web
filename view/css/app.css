@@ -1,0 +1,12 @@
+@CHARSET "UTF-8";
+.btn-water {
+	background-image: url( /view/images/16x16/water-droplet.jpg ) !important;
+}
+
+.outlet {
+	background-image: url( /view/images/16x16/socket.png ) !important;	
+}
+
+.valve {
+	background-image: url( /view/images/16x16/valve.png ) !important;	
+}
