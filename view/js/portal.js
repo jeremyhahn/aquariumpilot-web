@@ -51,7 +51,7 @@ Ext.define('Ext.app.Portal', {
                 xtype: 'container',
                 region: 'center',
                 layout: 'border',
-                items: [{
+                items: [/*{
                     id: 'app-options',
                     title: 'Options',
                     region: 'west',
@@ -78,7 +78,7 @@ Ext.define('Ext.app.Portal', {
                         autoScroll: true,
                         iconCls: 'settings'
                     }]
-                },{
+                },*/{
                     id: 'app-portal',
                     xtype: 'portalpanel',
                     region: 'center',
@@ -97,125 +97,120 @@ Ext.define('Ext.app.Portal', {
                             title: 'Waterworks',
                             tools: this.getTools(),
                             width: 400,
+                            iconCls: 'waterworks',
+                            bbar: [/*{
+                        	    id: 'waterworks-bbar-label',
+                        	    xtype: 'label',
+                        	    style: { margin: 3 },
+                        		text: 'Status: '
+                        	}, */{
+                        	    id: 'waterworks-bbar',
+                        	    xtype: 'label',
+                        		text: 'Loading...',
+                        		style: { margin: 3 }
+                        	}],
                             items: [{
                             	xtype: 'toolbar',
                             	items: [{
+                            		id: 'waterchange',
                             		xtype: 'button',
                             		iconCls: 'btn-water',
-                            		text: 'Water Change',
-                            		listeners: {
-                            			click: function(btn, event) {
-		                            		Ext.Msg.prompt('Water Change', 'How many gallons?', function(btn, text){
-		                            		    if (btn == 'ok') {
-		                            		    	if(isNaN(text)) {
-		                            		    		Ext.Msg.show({
-		                            		    		     title:'Error',
-		                            		    		     msg: 'Number required.',
-		                            		    		     buttons: Ext.Msg.OK,
-		                            		    		     icon: Ext.Msg.ERROR
-		                            		    		});
-		                            		    		return false;
-		                            		    	}
-		                            		    	if(text <= 0) {
-		                            		    		Ext.Msg.show({
-		                            		    		     title:'Error',
-		                            		    		     msg: 'Gallons must be greater than zero.',
-		                            		    		     buttons: Ext.Msg.OK,
-		                            		    		     icon: Ext.Msg.ERROR
-		                            		    		});
-		                            		    		return false;
-		                            		    	}
-		                            		    	Ext.Ajax.request({
-		                                                method: 'GET',
-		                                                url: '/index.php/WaterworksController/waterchange/' + text
-		                                        	});
-		                            		    }
-		                            		});
-                            			}
-                            		}
+                            		text: 'Water Change'
+                            	}, {
+                            		id: 'maintenance',
+                            		xtype: 'button',
+                            		iconCls: 'btn-maintenance',
+                            		text: 'Maintenance Mode',
+                            		enableToggle: true
                             	}]
                             }, {
-                            	id: 'waterworks-panel',
-                            	xtype: 'panel',
-                            	title: '120 VAC Receptacles',
-                            	style: {
-                            		paddingTop: 5
+                            	xtype: 'container',
+                            	layout: {
+                            		type: 'hbox',
+                            		pack: 'start',
+                            		align: 'stretch'
                             	},
                             	items: [{
-	                            	xtype: 'container',
-	                            	height: 5
-	                            }, {
-	                            	id: 'outlet1',
-	                            	xtype: 'button',
-	                            	text: 'Socket 1',
+	                            	id: 'waterworks-panel',
+	                            	xtype: 'panel',
+	                            	title: '120 VAC Receptacles',
 	                            	iconCls: 'outlet',
-	                            	enableToggle: true
-	                            }, {
-	                            	xtype: 'container',
-	                            	height: 5
-	                            }, {
-	                            	id: 'outlet2',
-	                            	xtype: 'button',
-	                            	text: 'Socket 2',
-	                            	iconCls: 'outlet',
-	                            	enableToggle: true
-	                            }, {
-	                            	xtype: 'container',
-	                            	height: 5
-	                            }, {
-	                            	id: 'outlet3',
-	                            	xtype: 'button',
-	                            	text: 'Socket 3',
-	                            	iconCls: 'outlet',
-	                            	enableToggle: true
-	                            }, {
-	                            	xtype: 'container',
-	                            	height: 5
-	                            }, {
-	                            	id: 'outlet4',
-	                            	xtype: 'button',
-	                            	text: 'Socket 4 / RO/DI UV',
-	                            	iconCls: 'outlet',
-	                            	enableToggle: true
-	                            }, {
-	                            	xtype: 'container',
-	                            	height: 5
-	                            }, {
-	                            	id: 'outlet5',
-	                            	xtype: 'button',
-	                            	text: 'Socket 5 - Reservoir Powerhead',
-	                            	iconCls: 'outlet',
-	                            	enableToggle: true
-	                            }, {
-	                            	xtype: 'container',
-	                            	height: 5
-	                            }, {
-	                            	id: 'outlet6',
-	                            	xtype: 'button',
-	                            	text: 'Socket 6 - Reservoir -> Aquarium',
-	                            	iconCls: 'outlet',
-	                            	enableToggle: true
-	                            }, {
-	                            	xtype: 'container',
-	                            	height: 5
-	                            }, {
-	                            	id: 'outlet7',
-	                            	xtype: 'button',
-	                            	text: 'Socket 7 - Reservoir Air Pump',
-	                            	iconCls: 'outlet',
-	                            	enableToggle: true
-	                            }, {
-	                            	xtype: 'container',
-	                            	height: 5
-	                            }, {
-	                            	id: 'outlet8',
-	                            	xtype: 'button',
-	                            	text: 'Socket 8',
-	                            	iconCls: 'outlet',
-	                            	enableToggle: true
+	                            	flex: 1,
+	                            	style: { margin: 5 },
+	                            	items: [{
+		                            	xtype: 'container',
+		                            	height: 5
+		                            }, {
+		                            	id: 'outlet1',
+		                            	xtype: 'button',
+		                            	text: 'Outlet 1',
+		                            	enableToggle: true
+		                            }, {
+		                            	xtype: 'container',
+		                            	height: 5
+		                            }, {
+		                            	id: 'outlet2',
+		                            	xtype: 'button',
+		                            	text: 'Outlet 2',
+		                            	enableToggle: true
+		                            }, {
+		                            	xtype: 'container',
+		                            	height: 5
+		                            }, {
+		                            	id: 'outlet3',
+		                            	xtype: 'button',
+		                            	text: 'Outlet 3',
+		                            	enableToggle: true
+		                            }, {
+		                            	xtype: 'container',
+		                            	height: 5
+		                            }, {
+		                            	id: 'outlet4',
+		                            	xtype: 'button',
+		                            	text: 'Outlet 4 / RO/DI UV',
+		                            	enableToggle: true
+		                            }, {
+		                            	xtype: 'container',
+		                            	height: 5
+		                            }, {
+		                            	id: 'outlet5',
+		                            	xtype: 'button',
+		                            	text: 'Outlet 5 - Reservoir Powerhead',
+		                            	enableToggle: true
+		                            }, {
+		                            	xtype: 'container',
+		                            	height: 5
+		                            }, {
+		                            	id: 'outlet6',
+		                            	xtype: 'button',
+		                            	text: 'Outlet 6 - Reservoir -> Aquarium',
+		                            	enableToggle: true
+		                            }, {
+		                            	xtype: 'container',
+		                            	height: 5
+		                            }, {
+		                            	id: 'outlet7',
+		                            	xtype: 'button',
+		                            	text: 'Outlet 7 - Reservoir Air Pump',
+		                            	enableToggle: true
+		                            }, {
+		                            	xtype: 'container',
+		                            	height: 5
+		                            }, {
+		                            	id: 'outlet8',
+		                            	xtype: 'button',
+		                            	text: 'Outlet 8',
+		                            	enableToggle: true
+		                            }, {
+		                            	xtype: 'container',
+		                            	height: 5
+		                            }]
 	                            }, {
 	                            	xtype: 'panel',
 	                            	title: 'Solenoid Valves',
+	                            	iconCls: 'valve',
+	                            	width: 300,
+	                            	style: { margin: 5 },
 	                            	items: [{
 		                            	xtype: 'container',
 		                            	height: 5
@@ -223,7 +218,6 @@ Ext.define('Ext.app.Portal', {
 		                            	id: 'rodiAquarium',
 		                            	xtype: 'button',
 		                            	text: 'RO/DI -> Aquarium',
-		                            	iconCls: 'valve',
 		                            	enableToggle: true
 		                            }, {
 		                            	xtype: 'container',
@@ -232,7 +226,6 @@ Ext.define('Ext.app.Portal', {
 		                            	id: 'rodiReservoir',
 		                            	xtype: 'button',
 		                            	text: 'RO/DI -> Saltwater Reservoir',
-		                            	iconCls: 'valve',
 		                            	enableToggle: true
 		                            }, {
 		                            	xtype: 'container',
@@ -241,33 +234,33 @@ Ext.define('Ext.app.Portal', {
 		                            	id: 'aquariumDrain',
 		                            	xtype: 'button',
 		                            	text: 'Aquarium -> Drain',
-		                            	iconCls: 'valve',
 		                            	enableToggle: true
 		                            }]
-	                            }, {
-									xtype: 'container',
-									layout: 'column',
-									style: {
-	                            		paddingTop: 5
-	                            	},
-									items: [{
-		                            	xtype: 'panel',
-		                            	title: 'Reservoir Temperature',
-		                            	width: 150,
-	                	            	html: '<div><canvas id="waterworks-reservoir-thermometer" width="110" height="350">[No canvas support]</canvas></div>'	                            	
-                            		 }, {
-                            			 xtype: 'panel',
-                            			 title: 'Room Temperature',
-                            			 width: 150,
-                            			 html: '[Need additional sensor]'
-                            		 }]
 	                            }]
+                            }, {
+    							xtype: 'container',
+    							layout: 'column',
+    							height: 670,
+    							style: { margin: 2.5 },
+    							items: [{
+                                	xtype: 'panel',
+                                	title: 'Reservoir Temperature',
+                                	width: 150,
+                                	style: { margin: 2 },
+                	            	html: '<div><canvas id="waterworks-reservoir-thermometer" width="110" height="350">[No canvas support]</canvas></div>'	                            	
+                        		 }, {
+                        			 xtype: 'panel',
+                        			 title: 'Room Temperature',
+                        			 width: 150,
+                        			 style: { margin: 2.5 },
+                        			 html: '[Need additional sensor]'
+                        		 }]
                             }],
                             listeners: {
                                 'close': Ext.bind(this.onPortletClose, this)
                             }
                         }]
-                    },{
+                    }, {
                         id: 'col-2',
                         layout: 'fit',
                         items: [{
@@ -275,7 +268,7 @@ Ext.define('Ext.app.Portal', {
                             title: 'Aquarium',
                             tools: this.getTools(),
                             layout: 'column',
-                            minWidth: 450,
+                            iconCls: 'aquarium',
                             items: [{
                             	xtype: 'panel',
                             	title: 'Water Temperature',

@@ -2,6 +2,6 @@
 <!DOCTYPE agilephp SYSTEM "AgilePHP/agilephp.dtd">
 <agilephp>
 	<logger level="info"/>
-<!--	<caching provider="ApcCacheProvider"></caching>-->
+	<!-- <caching provider="ApcCacheProvider"></caching> -->
 	<annotations/>
 </agilephp>

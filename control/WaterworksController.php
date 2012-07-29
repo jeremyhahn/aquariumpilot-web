@@ -2,42 +2,50 @@
 class WaterworksController extends BaseController {
 
     private $client;
+    private $config;
+    private $status;
 
     public function __construct() {
+
         parent::__construct();
+
         $this->client = new WaterworksClient('192.168.11.51', 'ABC123');
+        $this->config = $this->client->getConfig();
+        $this->status = $this->client->getStatus();
     }
 
     public function index() {
 
-        echo 'Outlet 1: ' . (($this->client->getOutlet1() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'Outlet 2: ' . (($this->client->getOutlet2() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'Outlet 3: ' . (($this->client->getOutlet3() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'Outlet 4: ' . (($this->client->getOutlet4() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'Outlet 5: ' . (($this->client->getOutlet5() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'Outlet 6: ' . (($this->client->getOutlet6() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'Outlet 7: ' . (($this->client->getOutlet7() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'Outlet 8: ' . (($this->client->getOutlet8() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'RO/DI -> Aquarium: ' . (($this->client->getRodiAquariumSolenoid() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'RO/DI -> Saltwater Reservoir: ' . (($this->client->getRodiReservoidSolenoid() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'Aquarium -> Drain: ' . (($this->client->getAquariumDrainSolenoid() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'Outlet 1: ' . (($this->status->getOutlet1() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'Outlet 2: ' . (($this->status->getOutlet2() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'Outlet 3: ' . (($this->status->getOutlet3() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'Outlet 4: ' . (($this->status->getOutlet4() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'Outlet 5: ' . (($this->status->getOutlet5() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'Outlet 6: ' . (($this->status->getOutlet6() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'Outlet 7: ' . (($this->status->getOutlet7() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'Outlet 8: ' . (($this->status->getOutlet8() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'RO/DI -> Aquarium: ' . (($this->status->getRodiAquariumSolenoid() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'RO/DI -> Saltwater Reservoir: ' . (($this->status->getRodiReservoirSolenoid() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'Aquarium -> Drain: ' . (($this->status->getAquariumDrainSolenoid() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
     }
 
     public function getButtonStates() {
 
         echo json_encode(
             array(
-                $this->client->getOutlet1(),
-                $this->client->getOutlet2(),
-                $this->client->getOutlet3(),
-                $this->client->getOutlet4(),
-                $this->client->getOutlet5(),
-                $this->client->getOutlet6(),
-                $this->client->getOutlet7(),
-                $this->client->getOutlet8(),
-                $this->client->getRodiAquariumSolenoid(),
-                $this->client->getRodiReservoidSolenoid(),
-                $this->client->getAquariumDrainSolenoid()                
+                $this->status->getOutlet1(),
+                $this->status->getOutlet2(),
+                $this->status->getOutlet3(),
+                $this->status->getOutlet4(),
+                $this->status->getOutlet5(),
+                $this->status->getOutlet6(),
+                $this->status->getOutlet7(),
+                $this->status->getOutlet8(),
+                $this->status->getRodiAquariumSolenoid(),
+                $this->status->getRodiReservoirSolenoid(),
+                $this->status->getAquariumDrainSolenoid(),
+                $this->status->isWaterChangeInProgress(),
+                $this->status->isInMaintenanceMode()
             ));
     }
 
@@ -97,18 +105,25 @@ class WaterworksController extends BaseController {
     }
     
     public function getSystem() {
-        print_r(JsonToModel::transform($this->client->getSystem(), 'System'));
+        print_r($this->client->getSystem());
     }
+
     public function getStatus() {
-        echo $this->client->getStatus();
-        //print_r(JsonToModel::transform($this->client->getStatus(), 'Status'));
+        print_r($this->client->getStatus());
     }
     
-    public function waterchange($gallons) {
+    public function setWaterchange($gallons) {
         if($gallons <= 0) {
             throw new Exception('Gallons must be greater than zero.');
         }
-        $this->client->waterchage($gallons);
+        $this->client->setWaterchage($gallons);
+    }
+
+    public function setMaintenance($mode) {
+        if($mode != 0 && $mode != 1) {
+            throw new Exception('Invalid maintenance mode value. Must be either a 1 or 0.');
+        }
+        $this->client->setMaintenance($mode);
     }
 
     private function sanitize($value) {

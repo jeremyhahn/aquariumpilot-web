@@ -37,7 +37,7 @@ class WaterworksClient extends ArduinoClient {
         return strpos($this->digitalRead('32'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
     }
     
-    public function getRodiReservoidSolenoid() {
+    public function getRodiReservoirSolenoid() {
         return strpos($this->digitalRead('33'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
     }
 
@@ -48,29 +48,33 @@ class WaterworksClient extends ArduinoClient {
     public function getReservoirTemp() {
         return $this->parseTemp($this->getTemp('1'));
     }
-    
+
     public function getSystem() {
-        return $this->__arduino_call('/system');
+        return JsonToModel::transform($this->__arduino_call('/system'), 'System');
     }
-    
+
     public function getStatus() {
-        return $this->__arduino_call('/status');
+        return JsonToModel::transform($this->__arduino_call('/status'), 'Status');
     }
-    
+
     public function getConfig() {
         return $this->__arduino_call('/config');
     }
-    
-    public function setMaintenanceMode($mode = 0) {
-        return $this->__arduino_call('/config/' . $mode);
-    }
-    
-    public function isPerformingWaterChange() {
-        return $this->__arduino_call('/status/' . $mode);
+
+    public function setWaterchage($gallons) {
+        $this->__arduino_call('/waterchange/' . $gallons);
     }
 
-    public function waterchage($gallons) {
-        return $this->__arduino_call('/waterchange/' . $gallons);
+    public function isPerformingWaterChange() {
+        return $this->__arduino_call('/waterchange');
+    }
+
+    public function setMaintenance($mode = 0) {
+        return $this->__arduino_call('/maintenance/' . $mode);
+    }
+
+    public function isInMaintenanceMode() {
+        return $this->__arduino_call('/maintenance');
     }
 }
 ?>

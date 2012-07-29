@@ -18,8 +18,7 @@ try {
 	                'outlet8', 'rodiAquariumSolenoid', 'rodiReservoirSolenoid', 'aquariumDrainSolenoid',
 	                'upperFloatValve', 'lowerFloatValve', 'reservoirTemp', 'waterChangeInProgress',
 	 				'wcTotalGallons', 'wcCycle', 'wcDrainTimerId', 'wcDrainTimerEnabled', 'wcFillTimerId',
-	                'wcCycle', 'wcTotalGallons', 'wcCycle', 'wcDrainTimerId', 'wcDailyTimerEnabled', 'wcCycle',
-	                'activeTimers', 'maintenanceInProgress'); 
+	                'wcFillTimerEnabled', 'wcDailyTimerId', 'wcDailyTimerEnabled', 'activeTimers', 'maintenanceInProgress');
 	
 	$gen = new ModelGenerator(null, 'Status',
 			 $fields,

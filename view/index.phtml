@@ -62,7 +62,9 @@
             });
 
             function pollWaterworks() {
-                
+
+            	Ext.getCmp('waterworks-bbar').update('Loading...');
+
                 function getThermometerColor(temp) {
     
                 	//return temp < 80 ? ['rgba(0,0,255,1)'] : ['rgba(255,0,0,1)'];
@@ -89,26 +91,31 @@
                 var thermometer = new RGraph.Thermometer('aquarium-water-thermometer', 0, 100, <?php echo $aquarium_water_temp; ?>);
                 thermometer.Set('chart.colors', getThermometerColor(<?php echo $aquarium_water_temp; ?>));
     	        thermometer.Set('chart.scale.decimals', 2);
+    	        thermometer.Set('chart.shadow', false);
                 thermometer.Draw();
     
             	// Aquarium water surface temperature
                 var thermometer2 = new RGraph.Thermometer('aquarium-air-thermometer', 0, 100, <?php echo $aquarium_air_temp; ?>);
                 thermometer2.Set('chart.colors', getThermometerColor(<?php echo $aquarium_air_temp; ?>));
                 thermometer2.Set('chart.scale.decimals', 2);
+                thermometer2.Set('chart.shadow', false);
                 thermometer2.Draw();
     
                 // Saltwater Reservoir Temperature
                 var thermometer3 = new RGraph.Thermometer('waterworks-reservoir-thermometer', 0, 100, <?php echo $waterworks_reservoir_temp; ?>);
                 thermometer3.Set('chart.colors', getThermometerColor(<?php echo $waterworks_reservoir_temp; ?>));
                 thermometer3.Set('chart.scale.decimals', 2);
+                thermometer3.Set('chart.shadow', false);
                 thermometer3.Draw();
-    
+
                 Ext.Ajax.request({
                     method: 'GET',
                     url: '/index.php/WaterworksController/getButtonStates',
                     params: {},
                     success: function(result, request) {
-    
+
+                    	Ext.getCmp('waterworks-bbar').update('Ready');
+
                         var pinValues = Ext.decode(result.responseText);
     
                         if(pinValues[0]) Ext.getCmp('outlet1').toggle(true, true);
@@ -122,6 +129,18 @@
                         if(pinValues[8]) Ext.getCmp('rodiAquarium').toggle(true, true);
                         if(pinValues[9]) Ext.getCmp('rodiReservoir').toggle(true, true);
                         if(pinValues[10]) Ext.getCmp('aquariumDrain').toggle(true, true);
+                        if(pinValues[11]) {
+                            Ext.getCmp('waterchange').disable();
+                            Ext.getCmp('waterworks-bbar').update('Performing water change...');
+                        }
+                        else {
+                        	Ext.getCmp('waterchange').enable();
+                        }
+                        if(pinValues[12]) {
+                        	Ext.getCmp('waterchange').disable();
+                            Ext.getCmp('maintenance').toggle(true, true);
+                            Ext.getCmp('waterworks-bbar').update('Maintenance mode...');
+                        }
 
                         // Set event handlers for button clicks / toggles
                         Ext.getCmp('outlet1').on('toggle', function(button, pressed) {
@@ -203,7 +222,7 @@
                                 url: '/index.php/WaterworksController/setRodiReservoir/' + value
                         	});
                         });
-    
+
                         Ext.getCmp('aquariumDrain').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -211,7 +230,55 @@
                                 url: '/index.php/WaterworksController/setAquariumDrain/' + value
                         	});
                         });
-                    }
+
+                        Ext.getCmp('waterchange').on('click', function(button, pressed) {
+                        	Ext.Msg.prompt('Water Change', 'How many gallons?', function(btn, text) {
+                    		    if (btn == 'ok') {
+                    		    	if(isNaN(text)) {
+                    		    		Ext.Msg.show({
+                    		    		     title:'Error',
+                    		    		     msg: 'Number required.',
+                    		    		     buttons: Ext.Msg.OK,
+                    		    		     icon: Ext.Msg.ERROR
+                    		    		});
+                    		    		return false;
+                    		    	}
+                    		    	if(text <= 0) {
+                    		    		Ext.Msg.show({
+                    		    		     title:'Error',
+                    		    		     msg: 'Gallons must be greater than zero.',
+                    		    		     buttons: Ext.Msg.OK,
+                    		    		     icon: Ext.Msg.ERROR
+                    		    		});
+                    		    		return false;
+                    		    	}
+                    		    	Ext.Ajax.request({
+                                        method: 'GET',
+                                        url: '/index.php/WaterworksController/setWaterchange/' + text,
+                                        success: function(result, request) {
+                    		    			Ext.getCmp('waterworks-bbar').update('Performing water change...');
+                    		    		}
+                                	});
+                    		    }
+                    		});
+                        });
+
+                        Ext.getCmp('maintenance').on('toggle', function(button, pressed) {
+                            var value = pressed ? '1' : '0';
+                        	Ext.Ajax.request({
+                                method: 'GET',
+                                url: '/index.php/WaterworksController/setMaintenance/' + value
+                        	});
+                        	if(pressed) {
+              		    	   Ext.getCmp('waterchange').disable();
+              		    	   Ext.getCmp('waterworks-bbar').update('Maintenance mode...');
+                        	}
+              		    	else {
+              		    	   Ext.getCmp('waterchange').enable();
+              		    	   Ext.getCmp('waterworks-bbar').update('Ready');
+              		    	}
+                        });  
+                    }                      
                 });
 
                 setTimeout('pollWaterworks()', 30000);

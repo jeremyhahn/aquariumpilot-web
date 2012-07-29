@@ -1,6 +1,18 @@
 @CHARSET "UTF-8";
 .btn-water {
-	background-image: url( /view/images/16x16/water-droplet.jpg ) !important;
+	background-image: url( /view/images/16x16/water.png ) !important;
+}
+
+.btn-maintenance {
+	background-image: url( /view/images/16x16/maintenance.png ) !important;
+}
+
+.aquarium {
+	background-image: url( /view/images/16x16/aquarium.png ) !important;	
+}
+
+.waterworks {
+	background-image: url( /view/images/16x16/waterworks.png ) !important;	
 }
 
 .outlet {

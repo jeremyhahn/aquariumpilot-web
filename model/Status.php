@@ -21,16 +21,20 @@ class Status extends BaseModel {
     private $wcDrainTimerId;
     private $wcDrainTimerEnabled;
     private $wcFillTimerId;
-    private $wcCycle;
-    private $wcTotalGallons;
-    private $wcCycle;
-    private $wcDrainTimerId;
+    private $wcFillTimerEnabled;
+    private $wcDailyTimerId;
     private $wcDailyTimerEnabled;
-    private $wcCycle;
     private $activeTimers;
     private $maintenanceInProgress;
 
-    public function __construct($outlet1 = null, $outlet2 = null, $outlet3 = null, $outlet4 = null, $outlet5 = null, $outlet6 = null, $outlet7 = null, $outlet8 = null, $rodiAquariumSolenoid = null, $rodiReservoirSolenoid = null, $aquariumDrainSolenoid = null, $upperFloatValve = null, $lowerFloatValve = null, $reservoirTemp = null, $waterChangeInProgress = null, $wcTotalGallons = null, $wcCycle = null, $wcDrainTimerId = null, $wcDrainTimerEnabled = null, $wcFillTimerId = null, $wcCycle = null, $wcTotalGallons = null, $wcCycle = null, $wcDrainTimerId = null, $wcDailyTimerEnabled = null, $wcCycle = null, $activeTimers = null, $maintenanceInProgress = null) {
+    public function __construct($outlet1 = 0, $outlet2 = 0, $outlet3 = 0, $outlet4 = 0,
+             $outlet5 = 0, $outlet6 = 0, $outlet7 = 0, $outlet8 = 0, $rodiAquariumSolenoid = 0,
+             $rodiReservoirSolenoid = 0, $aquariumDrainSolenoid = 0, $upperFloatValve = 0,
+             $lowerFloatValve = 0, $reservoirTemp = 0, $waterChangeInProgress = 0, $wcTotalGallons = 0,
+             $wcCycle = 0, $wcDrainTimerId = 0, $wcDrainTimerEnabled = 0, $wcFillTimerId = 0,
+             $wcFillTimerEnabled = 0, $wcDailyTimerId = 0, $wcDailyTimerEnabled = 0, $activeTimers = 0,
+             $maintenanceInProgress = 0) {
+
         $this->outlet1 = $outlet1;
         $this->outlet2 = $outlet2;
         $this->outlet3 = $outlet3;
@@ -51,12 +55,9 @@ class Status extends BaseModel {
         $this->wcDrainTimerId = $wcDrainTimerId;
         $this->wcDrainTimerEnabled = $wcDrainTimerEnabled;
         $this->wcFillTimerId = $wcFillTimerId;
-        $this->wcCycle = $wcCycle;
-        $this->wcTotalGallons = $wcTotalGallons;
-        $this->wcCycle = $wcCycle;
-        $this->wcDrainTimerId = $wcDrainTimerId;
+        $this->wcFillTimerEnabled = $wcFillTimerEnabled;
+        $this->wcDailyTimerId = $wcDailyTimerId;
         $this->wcDailyTimerEnabled = $wcDailyTimerEnabled;
-        $this->wcCycle = $wcCycle;
         $this->activeTimers = $activeTimers;
         $this->maintenanceInProgress = $maintenanceInProgress;
     }
@@ -66,7 +67,7 @@ class Status extends BaseModel {
     }
 
     public function getOutlet1() {
-        return $this->outlet1;
+        return (int)$this->outlet1;
     }
 
     public function setOutlet2($outlet2) {
@@ -74,7 +75,7 @@ class Status extends BaseModel {
     }
 
     public function getOutlet2() {
-        return $this->outlet2;
+        return (int)$this->outlet2;
     }
 
     public function setOutlet3($outlet3) {
@@ -82,7 +83,7 @@ class Status extends BaseModel {
     }
 
     public function getOutlet3() {
-        return $this->outlet3;
+        return (int)$this->outlet3;
     }
 
     public function setOutlet4($outlet4) {
@@ -90,7 +91,7 @@ class Status extends BaseModel {
     }
 
     public function getOutlet4() {
-        return $this->outlet4;
+        return (int)$this->outlet4;
     }
 
     public function setOutlet5($outlet5) {
@@ -98,7 +99,7 @@ class Status extends BaseModel {
     }
 
     public function getOutlet5() {
-        return $this->outlet5;
+        return (int)$this->outlet5;
     }
 
     public function setOutlet6($outlet6) {
@@ -106,7 +107,7 @@ class Status extends BaseModel {
     }
 
     public function getOutlet6() {
-        return $this->outlet6;
+        return (int)$this->outlet6;
     }
 
     public function setOutlet7($outlet7) {
@@ -114,7 +115,7 @@ class Status extends BaseModel {
     }
 
     public function getOutlet7() {
-        return $this->outlet7;
+        return (int)$this->outlet7;
     }
 
     public function setOutlet8($outlet8) {
@@ -122,7 +123,7 @@ class Status extends BaseModel {
     }
 
     public function getOutlet8() {
-        return $this->outlet8;
+        return (int)$this->outlet8;
     }
 
     public function setRodiAquariumSolenoid($rodiAquariumSolenoid) {
@@ -130,7 +131,7 @@ class Status extends BaseModel {
     }
 
     public function getRodiAquariumSolenoid() {
-        return $this->rodiAquariumSolenoid;
+        return (int)$this->rodiAquariumSolenoid;
     }
 
     public function setRodiReservoirSolenoid($rodiReservoirSolenoid) {
@@ -138,7 +139,7 @@ class Status extends BaseModel {
     }
 
     public function getRodiReservoirSolenoid() {
-        return $this->rodiReservoirSolenoid;
+        return (int)$this->rodiReservoirSolenoid;
     }
 
     public function setAquariumDrainSolenoid($aquariumDrainSolenoid) {
@@ -146,7 +147,7 @@ class Status extends BaseModel {
     }
 
     public function getAquariumDrainSolenoid() {
-        return $this->aquariumDrainSolenoid;
+        return (int)$this->aquariumDrainSolenoid;
     }
 
     public function setUpperFloatValve($upperFloatValve) {
@@ -154,7 +155,7 @@ class Status extends BaseModel {
     }
 
     public function getUpperFloatValve() {
-        return $this->upperFloatValve;
+        return (int)$this->upperFloatValve;
     }
 
     public function setLowerFloatValve($lowerFloatValve) {
@@ -162,7 +163,7 @@ class Status extends BaseModel {
     }
 
     public function getLowerFloatValve() {
-        return $this->lowerFloatValve;
+        return (int)$this->lowerFloatValve;
     }
 
     public function setReservoirTemp($reservoirTemp) {
@@ -177,8 +178,8 @@ class Status extends BaseModel {
         $this->waterChangeInProgress = $waterChangeInProgress;
     }
 
-    public function getWaterChangeInProgress() {
-        return $this->waterChangeInProgress;
+    public function isWaterChangeInProgress() {
+        return (int)$this->waterChangeInProgress;
     }
 
     public function setWcTotalGallons($wcTotalGallons) {
@@ -186,7 +187,7 @@ class Status extends BaseModel {
     }
 
     public function getWcTotalGallons() {
-        return $this->wcTotalGallons;
+        return (int)$this->wcTotalGallons;
     }
 
     public function setWcCycle($wcCycle) {
@@ -194,7 +195,7 @@ class Status extends BaseModel {
     }
 
     public function getWcCycle() {
-        return $this->wcCycle;
+        return (int)$this->wcCycle;
     }
 
     public function setWcDrainTimerId($wcDrainTimerId) {
@@ -202,7 +203,7 @@ class Status extends BaseModel {
     }
 
     public function getWcDrainTimerId() {
-        return $this->wcDrainTimerId;
+        return (int)$this->wcDrainTimerId;
     }
 
     public function setWcDrainTimerEnabled($wcDrainTimerEnabled) {
@@ -210,7 +211,7 @@ class Status extends BaseModel {
     }
 
     public function getWcDrainTimerEnabled() {
-        return $this->wcDrainTimerEnabled;
+        return (int)$this->wcDrainTimerEnabled;
     }
 
     public function setWcFillTimerId($wcFillTimerId) {
@@ -218,39 +219,23 @@ class Status extends BaseModel {
     }
 
     public function getWcFillTimerId() {
-        return $this->wcFillTimerId;
+        return (int)$this->wcFillTimerId;
     }
 
-    public function setWcCycle($wcCycle) {
-        $this->wcCycle = $wcCycle;
+    public function setWcFillTimerEnabled($wcFillTimerEnabled) {
+        $this->wcFillTimerEnabled = $wcFillTimerEnabled;
     }
 
-    public function getWcCycle() {
-        return $this->wcCycle;
+    public function getWcFillTimerEnabled() {
+        return (int)$this->wcFillTimerEnabled;
     }
 
-    public function setWcTotalGallons($wcTotalGallons) {
-        $this->wcTotalGallons = $wcTotalGallons;
+    public function setWcDailyTimerId($wcDailyTimerId) {
+        $this->wcDailyTimerId = $wcDailyTimerId;
     }
 
-    public function getWcTotalGallons() {
-        return $this->wcTotalGallons;
-    }
-
-    public function setWcCycle($wcCycle) {
-        $this->wcCycle = $wcCycle;
-    }
-
-    public function getWcCycle() {
-        return $this->wcCycle;
-    }
-
-    public function setWcDrainTimerId($wcDrainTimerId) {
-        $this->wcDrainTimerId = $wcDrainTimerId;
-    }
-
-    public function getWcDrainTimerId() {
-        return $this->wcDrainTimerId;
+    public function getWcDailyTimerId() {
+        return (int)$this->wcDailyTimerId;
     }
 
     public function setWcDailyTimerEnabled($wcDailyTimerEnabled) {
@@ -258,15 +243,7 @@ class Status extends BaseModel {
     }
 
     public function getWcDailyTimerEnabled() {
-        return $this->wcDailyTimerEnabled;
-    }
-
-    public function setWcCycle($wcCycle) {
-        $this->wcCycle = $wcCycle;
-    }
-
-    public function getWcCycle() {
-        return $this->wcCycle;
+        return (int)$this->wcDailyTimerEnabled;
     }
 
     public function setActiveTimers($activeTimers) {
@@ -274,7 +251,7 @@ class Status extends BaseModel {
     }
 
     public function getActiveTimers() {
-        return $this->activeTimers;
+        return (int)$this->activeTimers;
     }
 
     public function setMaintenanceInProgress($maintenanceInProgress) {
@@ -282,7 +259,11 @@ class Status extends BaseModel {
     }
 
     public function getMaintenanceInProgress() {
-        return $this->maintenanceInProgress;
+        return (int)$this->maintenanceInProgress;
+    }
+
+    public function isInMaintenanceMode() {
+        return (int)$this->maintenanceInProgress; 
     }
 }
 ?>
