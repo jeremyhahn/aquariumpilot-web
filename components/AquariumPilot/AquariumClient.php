@@ -5,8 +5,12 @@ class AquariumClient extends ArduinoClient {
         return $this->parseTemp($this->getTemp('1'));
     }
 
-    public function getAirTemp() {
+    public function getSurfaceTemp() {
         return $this->parseTemp($this->getTemp('2'));
+    }
+
+    public function getRoomTemp() {
+        return $this->parseTemp($this->getTemp('3'));
     }
 }
 ?>

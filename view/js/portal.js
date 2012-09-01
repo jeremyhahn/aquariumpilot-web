@@ -30,8 +30,8 @@ Ext.define('Ext.app.Portal', {
         }];
     },
 
-    initComponent: function(){
-        
+    initComponent: function() {
+
     	//var content = '<div class="portlet-content">'+Ext.example.shortBogusMarkup+'</div>';
     	var content = '<div class="portlet-content">AquariumPilot</div>';
 
@@ -95,9 +95,8 @@ Ext.define('Ext.app.Portal', {
                         },*/ {
                             id: 'portlet-waterworks',
                             title: 'Waterworks',
-                            tools: this.getTools(),
-                            width: 400,
                             iconCls: 'waterworks',
+                            minWidth: 455,
                             bbar: [/*{
                         	    id: 'waterworks-bbar-label',
                         	    xtype: 'label',
@@ -133,10 +132,11 @@ Ext.define('Ext.app.Portal', {
                             	items: [{
 	                            	id: 'waterworks-panel',
 	                            	xtype: 'panel',
-	                            	title: '120 VAC Receptacles',
+	                            	title: 'Mains AC Power',
 	                            	iconCls: 'outlet',
 	                            	flex: 1,
 	                            	style: { margin: 5 },
+	                            	minWidth: 275,
 	                            	items: [{
 		                            	xtype: 'container',
 		                            	height: 5
@@ -209,7 +209,8 @@ Ext.define('Ext.app.Portal', {
 	                            	xtype: 'panel',
 	                            	title: 'Solenoid Valves',
 	                            	iconCls: 'valve',
-	                            	width: 300,
+	                            	minWidth: 200,
+	                            	width: '100%',
 	                            	style: { margin: 5 },
 	                            	items: [{
 		                            	xtype: 'container',
@@ -269,22 +270,23 @@ Ext.define('Ext.app.Portal', {
                             tools: this.getTools(),
                             layout: 'column',
                             iconCls: 'aquarium',
+                            minWidth: 455,
                             items: [{
                             	xtype: 'panel',
                             	title: 'Water Temperature',
                             	width: 150,
-                            	html: '<div><canvas id="aquarium-water-thermometer" width="110" height="350">[No canvas support]</canvas></div>'
+                            	html: '<div><canvas id="aquarium-water-temp" width="110" height="350">[No canvas support]</canvas></div>'
                             }, {
                             	xtype: 'panel',
                             	title: 'Surface Temperature',
                             	width: 150,
-                            	html: '<div><canvas id="aquarium-air-thermometer" width="110" height="350">[No canvas support]</canvas></div>'
+                            	html: '<div><canvas id="aquarium-surface-temp" width="110" height="350">[No canvas support]</canvas></div>'
                             }, {
 								xtype: 'panel',
 								title: 'Room Temperature',
 								width: 150,
-								html: '[Need additional sensor]',
-							    }],
+								html: '<div><canvas id="aquarium-room-temp" width="110" height="350">[No canvas support]</canvas></div>'
+							}],
                                 /*    
                                 {
                             	columnWidth: .33,

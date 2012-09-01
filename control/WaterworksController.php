@@ -29,26 +29,6 @@ class WaterworksController extends BaseController {
         echo 'Aquarium -> Drain: ' . (($this->status->getAquariumDrainSolenoid() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
     }
 
-    public function getButtonStates() {
-
-        echo json_encode(
-            array(
-                $this->status->getOutlet1(),
-                $this->status->getOutlet2(),
-                $this->status->getOutlet3(),
-                $this->status->getOutlet4(),
-                $this->status->getOutlet5(),
-                $this->status->getOutlet6(),
-                $this->status->getOutlet7(),
-                $this->status->getOutlet8(),
-                $this->status->getRodiAquariumSolenoid(),
-                $this->status->getRodiReservoirSolenoid(),
-                $this->status->getAquariumDrainSolenoid(),
-                $this->status->isWaterChangeInProgress(),
-                $this->status->isInMaintenanceMode()
-            ));
-    }
-
     public function setSocket1($value = 0) {
         $value = $this->sanitize($value);
         $this->client->digitalWrite(24, $value);
@@ -81,12 +61,12 @@ class WaterworksController extends BaseController {
     
     public function setSocket7($value = 0) {
         $value = $this->sanitize($value);
-        $this->client->digitalWrite(28, $value);
+        $this->client->digitalWrite(30, $value);
     }
     
     public function setSocket8($value = 0) {
         $value = $this->sanitize($value);
-        $this->client->digitalWrite(29, $value);
+        $this->client->digitalWrite(31, $value);
     }
     
     public function setRodiAquarium($value = 0) {
@@ -109,9 +89,9 @@ class WaterworksController extends BaseController {
     }
 
     public function getStatus() {
-        print_r($this->client->getStatus());
+        echo JsonRenderer::render($this->client->getStatus());
     }
-    
+
     public function setWaterchange($gallons) {
         if($gallons <= 0) {
             throw new Exception('Gallons must be greater than zero.');

@@ -45,7 +45,8 @@ abstract class ArduinoClient {
     protected function parseTemp($json) {
         preg_match('/\:\"(.*)\"/', $json, $matches);
         if(!count($matches) == 2) {
-            throw new Exception('Invalid temperature format.');
+            return 0;
+            //throw new Exception('Invalid temperature format.');
         }
         return $matches[1];
     }

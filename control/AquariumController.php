@@ -12,8 +12,12 @@ class AquariumController extends BaseController {
         return $this->client->getAquariumTemp();
     }
 
-    public function getAirTemp() {
-        return $this->client->getAirTemp();
+    public function getSurfaceTemp() {
+        return $this->client->getSurfaceTemp();
+    }
+
+    public function getRoomTemp() {
+        return $this->client->getRoomTemp();
     }
 }
 ?>

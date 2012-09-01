@@ -2,8 +2,9 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<title><?php echo $title ?></title>
-		<link href="/view/css/style.css" type="text/css" rel="stylesheet"/>
+		<link rel="stylesheet" type="text/css" href="/view/css/style.css"/>
 		<link rel="stylesheet" type="text/css" href="/view/js/extjs/resources/css/ext-all.css" />
+		<!-- <link id="theme" rel="stylesheet" href="/view/js/extjs/resources/css/ext-neptune.css" /> -->
     	<link rel="stylesheet" type="text/css" href="/view/css/portal.css" />
     	<link rel="stylesheet" type="text/css" href="/view/css/app.css" />
 
@@ -16,8 +17,9 @@
 		<script type="text/javascript" src="/view/js/extjs/ext.js"></script>
 		<script type="text/javascript" src="/view/js/all-classes.js"></script>
 		
+		
 		<!-- shared example code -->
-		<script type="text/javascript" src="/view/js/extjs/examples/shared/examples.js"></script>
+		<!-- <script type="text/javascript" src="/view/js/extjs/examples/shared/examples.js"></script> -->
 
 		<!-- portal classes --><!--
         <script type="text/javascript" src="classes/Portlet.js"></script>
@@ -59,6 +61,8 @@
             Ext.onReady(function(){
                 Ext.create('Ext.app.Portal');
                 pollWaterworks();
+
+                //Ext.util.CSS.swapStyleSheet('theme', '/view/js/extjs/resources/css/ext-neptune.css');
             });
 
             function pollWaterworks() {
@@ -86,61 +90,76 @@
     
                 	return [grad];
                 }
-    
-             	// Aquarium water temperature
-                var thermometer = new RGraph.Thermometer('aquarium-water-thermometer', 0, 100, <?php echo $aquarium_water_temp; ?>);
+
+	            // Aquarium water temperature
+                var thermometer = new RGraph.Thermometer('aquarium-water-temp', 0, 100, <?php echo $aquarium_water_temp; ?>);
                 thermometer.Set('chart.colors', getThermometerColor(<?php echo $aquarium_water_temp; ?>));
     	        thermometer.Set('chart.scale.decimals', 2);
     	        thermometer.Set('chart.shadow', false);
                 thermometer.Draw();
-    
+
             	// Aquarium water surface temperature
-                var thermometer2 = new RGraph.Thermometer('aquarium-air-thermometer', 0, 100, <?php echo $aquarium_air_temp; ?>);
-                thermometer2.Set('chart.colors', getThermometerColor(<?php echo $aquarium_air_temp; ?>));
+                var thermometer2 = new RGraph.Thermometer('aquarium-surface-temp', 0, 100, <?php echo $aquarium_surface_temp; ?>);
+                thermometer2.Set('chart.colors', getThermometerColor(<?php echo $aquarium_surface_temp; ?>));
                 thermometer2.Set('chart.scale.decimals', 2);
                 thermometer2.Set('chart.shadow', false);
                 thermometer2.Draw();
-    
-                // Saltwater Reservoir Temperature
-                var thermometer3 = new RGraph.Thermometer('waterworks-reservoir-thermometer', 0, 100, <?php echo $waterworks_reservoir_temp; ?>);
-                thermometer3.Set('chart.colors', getThermometerColor(<?php echo $waterworks_reservoir_temp; ?>));
+
+             	// Aquarium room temperature
+                var thermometer3 = new RGraph.Thermometer('aquarium-room-temp', 0, 100, <?php echo $aquarium_room_temp; ?>);
+                thermometer3.Set('chart.colors', getThermometerColor(<?php echo $aquarium_room_temp; ?>));
                 thermometer3.Set('chart.scale.decimals', 2);
                 thermometer3.Set('chart.shadow', false);
                 thermometer3.Draw();
 
+                // Saltwater Reservoir Temperature
+                var thermometer4 = new RGraph.Thermometer('waterworks-reservoir-thermometer', 0, 100, <?php echo $waterworks_reservoir_temp; ?>);
+                thermometer4.Set('chart.colors', getThermometerColor(<?php echo $waterworks_reservoir_temp; ?>));
+                thermometer4.Set('chart.scale.decimals', 2);
+                thermometer4.Set('chart.shadow', false);
+                thermometer4.Draw();
+
                 Ext.Ajax.request({
                     method: 'GET',
-                    url: '/index.php/WaterworksController/getButtonStates',
+                    url: '/index.php/WaterworksController/getStatus',
                     params: {},
                     success: function(result, request) {
 
                     	Ext.getCmp('waterworks-bbar').update('Ready');
 
-                        var pinValues = Ext.decode(result.responseText);
-    
-                        if(pinValues[0]) Ext.getCmp('outlet1').toggle(true, true);
-                        if(pinValues[1]) Ext.getCmp('outlet2').toggle(true, true);
-                        if(pinValues[2]) Ext.getCmp('outlet3').toggle(true, true);
-                        if(pinValues[3]) Ext.getCmp('outlet4').toggle(true, true);
-                        if(pinValues[4]) Ext.getCmp('outlet5').toggle(true, true);
-                        if(pinValues[5]) Ext.getCmp('outlet6').toggle(true, true);
-                        if(pinValues[6]) Ext.getCmp('outlet7').toggle(true, true);
-                        if(pinValues[7]) Ext.getCmp('outlet8').toggle(true, true);
-                        if(pinValues[8]) Ext.getCmp('rodiAquarium').toggle(true, true);
-                        if(pinValues[9]) Ext.getCmp('rodiReservoir').toggle(true, true);
-                        if(pinValues[10]) Ext.getCmp('aquariumDrain').toggle(true, true);
-                        if(pinValues[11]) {
+                        var waterworks = Ext.decode(result.responseText);
+
+                        // Waterworks buttons
+                        if(waterworks.outlet1 == '1') Ext.getCmp('outlet1').toggle(true, true);
+                        if(waterworks.outlet2 == '1') Ext.getCmp('outlet2').toggle(true, true);
+                        if(waterworks.outlet3 == '1') Ext.getCmp('outlet3').toggle(true, true);
+                        if(waterworks.outlet4 == '1') Ext.getCmp('outlet4').toggle(true, true);
+                        if(waterworks.outlet5 == '1') Ext.getCmp('outlet5').toggle(true, true);
+                        if(waterworks.outlet6 == '1') Ext.getCmp('outlet6').toggle(true, true);
+                        if(waterworks.outlet7 == '1') Ext.getCmp('outlet7').toggle(true, true);
+                        if(waterworks.outlet8 == '1') Ext.getCmp('outlet8').toggle(true, true);
+                        if(waterworks.rodiAquariumSolenoid == '1') Ext.getCmp('rodiAquarium').toggle(true, true);
+                        if(waterworks.rodiReservoirSolenoid == '1') Ext.getCmp('rodiReservoir').toggle(true, true);
+                        if(waterworks.aquariumDrainSolenoid == '1') Ext.getCmp('aquariumDrain').toggle(true, true);
+                        if(waterworks.waterChangeInProgress == '1') {
                             Ext.getCmp('waterchange').disable();
                             Ext.getCmp('waterworks-bbar').update('Performing water change...');
                         }
                         else {
                         	Ext.getCmp('waterchange').enable();
                         }
-                        if(pinValues[12]) {
+                        if(waterworks.maintenanceInProgress == '1') {
                         	Ext.getCmp('waterchange').disable();
                             Ext.getCmp('maintenance').toggle(true, true);
                             Ext.getCmp('waterworks-bbar').update('Maintenance mode...');
                         }
+
+                        thermometer3 = null;
+                        thermometer3 = new RGraph.Thermometer('waterworks-reservoir-thermometer', 0, 100, parseFloat(waterworks.reservoirTemp));
+                        thermometer3.Set('chart.colors', getThermometerColor(waterworks.reservoirTemp));
+                        thermometer3.Set('chart.scale.decimals', 2);
+                        thermometer3.Set('chart.shadow', false);
+                        thermometer3.Draw();
 
                         // Set event handlers for button clicks / toggles
                         Ext.getCmp('outlet1').on('toggle', function(button, pressed) {
@@ -150,7 +169,7 @@
                                 url: '/index.php/WaterworksController/setSocket1/' + value
                         	});
                         });
-    
+
                         Ext.getCmp('outlet2').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -158,7 +177,7 @@
                                 url: '/index.php/WaterworksController/setSocket2/' + value
                         	});
                         });
-    
+
                         Ext.getCmp('outlet3').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -166,7 +185,7 @@
                                 url: '/index.php/WaterworksController/setSocket3/' + value
                         	});
                         });
-    
+
                         Ext.getCmp('outlet4').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -174,7 +193,7 @@
                                 url: '/index.php/WaterworksController/setSocket4/' + value
                         	});
                         });
-    
+
                         Ext.getCmp('outlet5').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -182,7 +201,7 @@
                                 url: '/index.php/WaterworksController/setSocket5/' + value
                         	});
                         });
-    
+
                         Ext.getCmp('outlet6').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -190,7 +209,7 @@
                                 url: '/index.php/WaterworksController/setSocket6/' + value
                         	});
                         });
-    
+
                         Ext.getCmp('outlet7').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -198,7 +217,7 @@
                                 url: '/index.php/WaterworksController/setSocket7/' + value
                         	});
                         });
-    
+
                         Ext.getCmp('outlet8').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -206,7 +225,7 @@
                                 url: '/index.php/WaterworksController/setSocket8/' + value
                         	});
                         });
-    
+
                         Ext.getCmp('rodiAquarium').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
@@ -214,7 +233,7 @@
                                 url: '/index.php/WaterworksController/setRodiAquarium/' + value
                         	});
                         });
-    
+
                         Ext.getCmp('rodiReservoir').on('toggle', function(button, pressed) {
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
