@@ -8,6 +8,9 @@ class AquariumController extends BaseController {
         $this->client = new AquariumClient('192.168.11.52', 'ABC123');
     }
 
+    public function index() {
+    }
+    
     public function getAquariumTemp() {
         return $this->client->getAquariumTemp();
     }
@@ -18,6 +21,10 @@ class AquariumController extends BaseController {
 
     public function getRoomTemp() {
         return $this->client->getRoomTemp();
+    }
+    
+    public function getPh() {
+        echo $this->client->getPh();
     }
 }
 ?>

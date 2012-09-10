@@ -12,5 +12,9 @@ class AquariumClient extends ArduinoClient {
     public function getRoomTemp() {
         return $this->parseTemp($this->getTemp('3'));
     }
+
+    public function getPh() {
+        return $this->__arduino_call('ph');
+    }
 }
 ?>

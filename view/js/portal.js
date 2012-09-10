@@ -270,23 +270,31 @@ Ext.define('Ext.app.Portal', {
                             tools: this.getTools(),
                             layout: 'column',
                             iconCls: 'aquarium',
-                            minWidth: 455,
+                            minWidth: 400,
                             items: [{
-                            	xtype: 'panel',
-                            	title: 'Water Temperature',
-                            	width: 150,
-                            	html: '<div><canvas id="aquarium-water-temp" width="110" height="350">[No canvas support]</canvas></div>'
+                                xtype: 'container',
+                                html: '<div id="aquarium-ph"> </div>'
                             }, {
-                            	xtype: 'panel',
-                            	title: 'Surface Temperature',
-                            	width: 150,
-                            	html: '<div><canvas id="aquarium-surface-temp" width="110" height="350">[No canvas support]</canvas></div>'
-                            }, {
-								xtype: 'panel',
-								title: 'Room Temperature',
-								width: 150,
-								html: '<div><canvas id="aquarium-room-temp" width="110" height="350">[No canvas support]</canvas></div>'
-							}],
+                                xtype: 'container',
+                                layout: 'column',
+                                width: 475,
+                                items:[{
+	                            	xtype: 'panel',
+	                            	title: 'Water Temperature',
+	                            	minWidth: 150,
+	                            	html: '<div><canvas id="aquarium-water-temp" width="110" height="350">[No canvas support]</canvas></div>'
+	                            }, {
+	                            	xtype: 'panel',
+	                            	title: 'Surface Temperature',
+	                            	minWidth: 150,
+	                            	html: '<div><canvas id="aquarium-surface-temp" width="110" height="350">[No canvas support]</canvas></div>'
+	                            }, {
+									xtype: 'panel',
+									title: 'Room Temperature',
+									minWidth: 150,
+									html: '<div><canvas id="aquarium-room-temp" width="110" height="350">[No canvas support]</canvas></div>'
+								}]
+                            }], 
                                 /*    
                                 {
                             	columnWidth: .33,

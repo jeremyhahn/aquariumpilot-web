@@ -8,16 +8,19 @@
     	<link rel="stylesheet" type="text/css" href="/view/css/portal.css" />
     	<link rel="stylesheet" type="text/css" href="/view/css/app.css" />
 
+		<!-- ExtJS -->
+		<script type="text/javascript" src="/view/js/extjs/ext.js"></script>
+		<script type="text/javascript" src="/view/js/all-classes.js"></script>
+
+		<!--  HighCharts / JQuery -->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript" src="/view/js/highcharts/js/highcharts.src.js"></script>
+
 		<!-- RGraph -->
 		<script src="/view/js/RGraph/libraries/RGraph.common.core.js" ></script>
         <script src="/view/js/RGraph/libraries/RGraph.common.effects.js" ></script>
         <script src="/view/js/RGraph/libraries/RGraph.thermometer.js" ></script>
-    	
-    	<!-- ExtJS -->
-		<script type="text/javascript" src="/view/js/extjs/ext.js"></script>
-		<script type="text/javascript" src="/view/js/all-classes.js"></script>
-		
-		
+
 		<!-- shared example code -->
 		<!-- <script type="text/javascript" src="/view/js/extjs/examples/shared/examples.js"></script> -->
 
@@ -34,11 +37,12 @@
          app
         -->
 
+		<!-- The app -->
 		<script type="text/javascript" src="/view/js/portal.js"></script>
 		<script type="text/javascript" src="/view/js/window-waterchange.js"></script>
         <script type="text/javascript">
             Ext.Loader.setPath('Ext.app', 'classes');
-    
+
             Ext.require([
                 //'Ext.diag.layout.ContextItem.*',
                 //'Ext.diag.layout.Context.*',
@@ -61,6 +65,7 @@
             Ext.onReady(function(){
                 Ext.create('Ext.app.Portal');
                 pollWaterworks();
+                renderCharts();
 
                 //Ext.util.CSS.swapStyleSheet('theme', '/view/js/extjs/resources/css/ext-neptune.css');
             });
@@ -302,6 +307,83 @@
 
                 setTimeout('pollWaterworks()', 30000);
             }
+
+            function renderCharts() {
+            	$(function () {
+            	    $(document).ready(function() {
+            	        Highcharts.setOptions({
+            	            global: {
+            	                useUTC: false
+            	            }
+            	        });
+            	    
+            	        var chart;
+            	        chart = new Highcharts.Chart({
+            	            chart: {
+            	                renderTo: 'aquarium-ph',
+            	                defaultSeriesType: 'spline',
+            	                type: 'spline',
+            	                marginRight: 10,
+            	                width: 490,
+            	                events: {
+            	                    load: function() {
+
+            	        				// set up the updating of the chart each second
+            	                        var series = this.series[0];
+            	                        setInterval(function() {
+
+            	                        	$.getJSON('/index.php/AquariumController/getPh', function(response) {
+
+            	                                var point = [ (new Date()).getTime(), parseFloat(response.pH) ];
+            	                                series.addPoint(point, true, true);
+            	                            })
+            	                        }, 3000);
+            	                    }
+            	                }
+            	            },
+            	            title: {
+            	                text: 'Live Aquarium pH'
+            	            },
+            	            xAxis: {
+            	                type: 'datetime',
+            	                tickPixelInterval: 150
+            	            },
+            	            yAxis: {
+            	                title: {
+            	                    text: 'pH'
+            	                },
+            	                plotLines: [{
+            	                    value: 0,
+            	                    width: 1,
+            	                    color: '#808080'
+            	                }]
+            	            },
+            	            tooltip: {
+            	                formatter: function() {
+            	                        return '<b>'+ this.series.name +'</b><br/>'+
+            	                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
+            	                        Highcharts.numberFormat(this.y, 2);
+            	                }
+            	            },
+            	            credits : {
+            	                text : ''
+            	            },
+            	            legend: {
+            	                enabled: false
+            	            },
+            	            exporting: {
+            	                enabled: false
+            	            },
+            	            series: [{
+            	                name: 'pH',
+            	                data: [ (new Date().getTime()), 0]
+            	            }]
+            	        });
+            	    });
+            	    
+            	});
+            }
+            
         </script>
 	</head>
 	<body>
