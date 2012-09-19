@@ -2,47 +2,47 @@
 class WaterworksClient extends ArduinoClient {
 
     public function getOutlet1() {
-        return strpos($this->digitalRead('24'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
+        return strpos($this->digitalRead('28'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
     }
 
     public function getOutlet2() {
-        return strpos($this->digitalRead('25'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
-    }
-    
-    public function getOutlet3() {
-        return strpos($this->digitalRead('26'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
-    }
-    
-    public function getOutlet4() {
-        return strpos($this->digitalRead('27'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
-    }
-    
-    public function getOutlet5() {
-        return strpos($this->digitalRead('28'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
-    }
-    
-    public function getOutlet6() {
         return strpos($this->digitalRead('29'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
     }
     
-    public function getOutlet7() {
+    public function getOutlet3() {
         return strpos($this->digitalRead('30'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
     }
     
-    public function getOutlet8() {
+    public function getOutlet4() {
         return strpos($this->digitalRead('31'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
     }
     
-    public function getRodiAquariumSolenoid() {
+    public function getOutlet5() {
         return strpos($this->digitalRead('32'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
     }
     
-    public function getRodiReservoirSolenoid() {
+    public function getOutlet6() {
         return strpos($this->digitalRead('33'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
+    }
+    
+    public function getOutlet7() {
+        return strpos($this->digitalRead('34'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
+    }
+    
+    public function getOutlet8() {
+        return strpos($this->digitalRead('35'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
+    }
+    
+    public function getRodiAquariumSolenoid() {
+        return strpos($this->digitalRead('36'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
+    }
+    
+    public function getRodiReservoirSolenoid() {
+        return strpos($this->digitalRead('37'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
     }
 
     public function getAquariumDrainSolenoid() {
-        return strpos($this->digitalRead('36'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
+        return strpos($this->digitalRead('38'), 'HIGH') ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
     }
 
     public function getReservoirTemp() {

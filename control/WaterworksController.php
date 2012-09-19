@@ -31,57 +31,57 @@ class WaterworksController extends BaseController {
 
     public function setSocket1($value = 0) {
         $value = $this->sanitize($value);
-        $this->client->digitalWrite(24, $value);
+        $this->client->digitalWrite(28, $value);
     }
     
     public function setSocket2($value = 0) {
         $value = $this->sanitize($value);
-        $this->client->digitalWrite(25, $value);
+        $this->client->digitalWrite(29, $value);
     }
     
     public function setSocket3($value = 0) {
         $value = $this->sanitize($value);
-        $this->client->digitalWrite(26, $value);
+        $this->client->digitalWrite(30, $value);
     }
     
     public function setSocket4($value = 0) {
         $value = $this->sanitize($value);
-        $this->client->digitalWrite(27, $value);
+        $this->client->digitalWrite(31, $value);
     }
     
     public function setSocket5($value = 0) {
         $value = $this->sanitize($value);
-        $this->client->digitalWrite(28, $value);
+        $this->client->digitalWrite(32, $value);
     }
     
     public function setSocket6($value = 0) {
         $value = $this->sanitize($value);
-        $this->client->digitalWrite(29, $value);
+        $this->client->digitalWrite(33, $value);
     }
     
     public function setSocket7($value = 0) {
         $value = $this->sanitize($value);
-        $this->client->digitalWrite(30, $value);
+        $this->client->digitalWrite(34, $value);
     }
     
     public function setSocket8($value = 0) {
         $value = $this->sanitize($value);
-        $this->client->digitalWrite(31, $value);
+        $this->client->digitalWrite(35, $value);
     }
     
     public function setRodiAquarium($value = 0) {
         $value = $this->sanitize($value);
-        $this->client->digitalWrite(32, $value);
+        $this->client->digitalWrite(36, $value);
     }
     
     public function setRodiReservoir($value = 0) {
         $value = $this->sanitize($value);
-        $this->client->digitalWrite(33, $value);
+        $this->client->digitalWrite(37, $value);
     }
     
     public function setAquariumDrain($value = 0) {
         $value = $this->sanitize($value);
-        $this->client->digitalWrite(36, $value);
+        $this->client->digitalWrite(38, $value);
     }
     
     public function getSystem() {
