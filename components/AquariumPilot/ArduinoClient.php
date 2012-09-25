@@ -5,12 +5,14 @@ abstract class ArduinoClient {
     protected $apiKey;
 
     public function __construct($address, $apiKey) {
+
         $this->address = $address;
         $this->apiKey = $apiKey;
     }
 
     public function digitalRead($pin) {
-        return $this->__arduino_call('digital/' . $pin);
+
+        return $this->request('/digital/' . $pin);
     }
 
     public function digitalWrite($pin, $value) {
@@ -20,34 +22,41 @@ abstract class ArduinoClient {
         }
 
         return $value === DigitalPinValue::$HIGH ?
-            $this->__arduino_call('digital/' . $pin . '/' . 'HIGH') :
-            $this->__arduino_call('digital/' . $pin . '/' . 'LOW');
+            $this->request('/digital/' . $pin . '/' . 'HIGH') :
+            $this->request('/digital/' . $pin . '/' . 'LOW');
     }
 
     public function getTemp($pin) {
-        return $this->__arduino_call('temp/' . $pin);
+
+        return $this->request('/temp/' . $pin);
     }
 
-    protected function __arduino_call($params) {
+    protected function request($request) {
 
-        $request = $this->address . '/' . $this->apiKey . '/' . $params;
+        $request = $this->address . '/' . $this->apiKey . $params;
 
         $ch = curl_init($request);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         $data = curl_exec($ch);
-        //$info = curl_getinfo($ch);
+        //print_r(curl_getinfo($ch));
         curl_close($ch);
 
         return $data;
     }
 
     protected function parseTemp($json) {
+
         preg_match('/\:\"(.*)\"/', $json, $matches);
         if(!count($matches) == 2) {
             return 0;
             //throw new Exception('Invalid temperature format.');
         }
         return $matches[1];
+    }
+
+    protected function isDigital($value) {
+
+        return $value == DigitalPinValue::$LOW || $value == DigitalPinValue::$HIGH;
     }
 }

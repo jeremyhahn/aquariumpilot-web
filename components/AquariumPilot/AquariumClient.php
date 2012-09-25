@@ -14,7 +14,7 @@ class AquariumClient extends ArduinoClient {
     }
 
     public function getPh() {
-        return $this->__arduino_call('ph');
+        return $this->request('ph');
     }
 }
 ?>
