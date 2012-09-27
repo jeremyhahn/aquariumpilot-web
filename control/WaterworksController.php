@@ -29,7 +29,7 @@ class WaterworksController extends WaterworksClient {
     }
 
     public function setOutlet2($value = 0) {
-        parent::setOutlet2(DigitalPinValue::$HIGH);
+        parent::setOutlet2($this->toDigital($value));
     }
     
     public function setOutlet3($value = 0) {
