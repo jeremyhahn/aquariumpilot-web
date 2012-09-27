@@ -13,7 +13,8 @@ try {
     AgilePHP::setDefaultTimezone('America/New_York');
     AgilePHP::setDebugMode(true);
 	AgilePHP::setAppName('AquariumPilot v1.0');
-/*
+
+	/*
 	$fields = array('outlet1', 'outlet2', 'outlet3', 'outlet4', 'outlet5', 'outlet6', 'outlet7',
 	                'outlet8', 'rodiAquariumSolenoid', 'rodiReservoirSolenoid', 'aquariumDrainSolenoid',
 	                'upperFloatValve', 'lowerFloatValve', 'reservoirTemp', 'waterChangeInProgress',

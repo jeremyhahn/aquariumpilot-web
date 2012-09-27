@@ -1,118 +1,87 @@
 <?php
-class WaterworksController extends BaseController {
-
-    private $client;
-    private $config;
-    private $status;
+class WaterworksController extends WaterworksClient {
 
     public function __construct() {
-
-        parent::__construct();
-
-        $this->client = new WaterworksClient('192.168.11.51', 'ABC123');
-        $this->config = $this->client->getConfig();
-        $this->status = $this->client->getStatus();
+        parent::__construct('192.168.11.51', 'ABC123');
     }
 
     public function index() {
 
-        echo 'Outlet 1: ' . (($this->status->getOutlet1() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'Outlet 2: ' . (($this->status->getOutlet2() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'Outlet 3: ' . (($this->status->getOutlet3() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'Outlet 4: ' . (($this->status->getOutlet4() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'Outlet 5: ' . (($this->status->getOutlet5() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'Outlet 6: ' . (($this->status->getOutlet6() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'Outlet 7: ' . (($this->status->getOutlet7() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'Outlet 8: ' . (($this->status->getOutlet8() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'RO/DI -> Aquarium: ' . (($this->status->getRodiAquariumSolenoid() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'RO/DI -> Saltwater Reservoir: ' . (($this->status->getRodiReservoirSolenoid() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
-        echo 'Aquarium -> Drain: ' . (($this->status->getAquariumDrainSolenoid() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        /*
+        echo 'Outlet 1: ' . (($this->getOutlet1() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'Outlet 2: ' . (($this->getOutlet2() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'Outlet 3: ' . (($this->getOutlet3() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'Outlet 4: ' . (($this->getOutlet4() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'Outlet 5: ' . (($this->getOutlet5() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'Outlet 6: ' . (($this->getOutlet6() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'Outlet 7: ' . (($this->getOutlet7() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'Outlet 8: ' . (($this->getOutlet8() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'RO/DI -> Aquarium: ' . (($this->getAquariumRodi() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'RO/DI -> Saltwater Reservoir: ' . (($this->getReservoirRodi() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        echo 'Aquarium -> Drain: ' . (($this->getAquariumDrain() == DigitalPinValue::$HIGH) ? 'On' : 'Off') . '<br>';
+        */
+
+        print_r(JsonToModel::transform(parent::getStatus(), 'Status'));
     }
 
-    public function setSocket1($value = 0) {
-        $value = $this->sanitize($value);
-        $this->client->digitalWrite(28, $value);
+    public function setOutlet1($value = 0) {
+        parent::setOutlet1($this->toDigital($value));
+    }
+
+    public function setOutlet2($value = 0) {
+        parent::setOutlet2(DigitalPinValue::$HIGH);
     }
     
-    public function setSocket2($value = 0) {
-        $value = $this->sanitize($value);
-        $this->client->digitalWrite(29, $value);
+    public function setOutlet3($value = 0) {
+        parent::setOutlet3($this->toDigital($value));
     }
     
-    public function setSocket3($value = 0) {
-        $value = $this->sanitize($value);
-        $this->client->digitalWrite(30, $value);
+    public function setOutlet4($value = 0) {
+        parent::setOutlet4($this->toDigital($value));
     }
     
-    public function setSocket4($value = 0) {
-        $value = $this->sanitize($value);
-        $this->client->digitalWrite(31, $value);
+    public function setOutlet5($value = 0) {
+        parent::setOutlet5($this->toDigital($value));
     }
     
-    public function setSocket5($value = 0) {
-        $value = $this->sanitize($value);
-        $this->client->digitalWrite(32, $value);
+    public function setOutlet6($value = 0) {
+        parent::setOutlet6($this->toDigital($value));
     }
     
-    public function setSocket6($value = 0) {
-        $value = $this->sanitize($value);
-        $this->client->digitalWrite(33, $value);
+    public function setOutlet7($value = 0) {
+        parent::setOutlet7($this->toDigital($value));
     }
     
-    public function setSocket7($value = 0) {
-        $value = $this->sanitize($value);
-        $this->client->digitalWrite(34, $value);
+    public function setOutlet8($value = 0) {
+        parent::setOutlet8($this->toDigital($value));
     }
     
-    public function setSocket8($value = 0) {
-        $value = $this->sanitize($value);
-        $this->client->digitalWrite(35, $value);
+    public function setAquariumRodi($value = 0) {
+        parent::setAquariumRodi($this->toDigital($value));
     }
-    
-    public function setRodiAquarium($value = 0) {
-        $value = $this->sanitize($value);
-        $this->client->digitalWrite(36, $value);
+
+    public function setReservoirRodi($value = 0) {
+        parent::setReservoirRodi($this->toDigital($value));
     }
-    
-    public function setRodiReservoir($value = 0) {
-        $value = $this->sanitize($value);
-        $this->client->digitalWrite(37, $value);
-    }
-    
+
     public function setAquariumDrain($value = 0) {
-        $value = $this->sanitize($value);
-        $this->client->digitalWrite(38, $value);
+        parent::setAquariumDrain($this->toDigital($value));
     }
-    
+
+    public function setMaintenance($value) {
+        parent::setMaintenance($this->toDigital($value));
+    }
+
     public function getSystem() {
-        print_r($this->client->getSystem());
+        echo parent::getSystem();
     }
 
     public function getStatus() {
-        echo JsonRenderer::render($this->client->getStatus());
+        echo parent::getStatus();
     }
 
-    public function setWaterchange($gallons) {
-        if($gallons <= 0) {
-            throw new Exception('Gallons must be greater than zero.');
-        }
-        $this->client->setWaterchage($gallons);
-    }
-
-    public function setMaintenance($mode) {
-        if($mode != 0 && $mode != 1) {
-            throw new Exception('Invalid maintenance mode value. Must be either a 1 or 0.');
-        }
-        $this->client->setMaintenance($mode);
-    }
-
-    private function sanitize($value) {
-
-        if($value != DigitalPinValue::$HIGH && $value != DigitalPinValue::$LOW) {
-            throw new Exception('Socket value must be either DigitalPinValue::HIGH or DigitalPinValue::LOW');
-        }
-
-        return $value == '1' ? DigitalPinValue::$HIGH : DigitalPinValue::$LOW;
+    private function toDigital($value) {
+        return $value <= 0 ? DigitalPinValue::$LOW: DigitalPinValue::$HIGH;
     }
 }
 ?>

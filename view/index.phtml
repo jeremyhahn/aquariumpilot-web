@@ -38,6 +38,7 @@
         -->
 
 		<!-- The app -->
+		<script type="text/javascript" src="/AgilePHP/AgilePHP.js"></script>
 		<script type="text/javascript" src="/view/js/portal.js"></script>
 		<script type="text/javascript" src="/view/js/window-waterchange.js"></script>
         <script type="text/javascript">
@@ -132,7 +133,22 @@
 
                     	Ext.getCmp('waterworks-bbar').update('Ready');
 
-                        var waterworks = Ext.decode(result.responseText);
+                    	try {
+
+                    		// This throws Ext.ex if this isnt valid json 
+                           	var waterworks = Ext.decode(result.responseText);
+                    	}
+                    	catch(err) {
+
+							console.log(err);
+
+							if(result.responseText == '' || result.responseText.match(/offline/))
+							   Ext.getCmp('waterworks-bbar').update('Offline...');
+
+                        	return;
+                    	}
+
+                        console.log(waterworks);
 
                         // Waterworks buttons
                         if(waterworks.outlet1 == '1') Ext.getCmp('outlet1').toggle(true, true);
@@ -171,7 +187,7 @@
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
                                 method: 'GET',
-                                url: '/index.php/WaterworksController/setSocket1/' + value
+                                url: '/index.php/WaterworksController/setOutlet1/' + value
                         	});
                         });
 
@@ -179,7 +195,7 @@
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
                                 method: 'GET',
-                                url: '/index.php/WaterworksController/setSocket2/' + value
+                                url: '/index.php/WaterworksController/setOutlet2/' + value
                         	});
                         });
 
@@ -187,7 +203,7 @@
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
                                 method: 'GET',
-                                url: '/index.php/WaterworksController/setSocket3/' + value
+                                url: '/index.php/WaterworksController/setOutlet3/' + value
                         	});
                         });
 
@@ -195,7 +211,7 @@
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
                                 method: 'GET',
-                                url: '/index.php/WaterworksController/setSocket4/' + value
+                                url: '/index.php/WaterworksController/setOutlet4/' + value
                         	});
                         });
 
@@ -203,7 +219,7 @@
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
                                 method: 'GET',
-                                url: '/index.php/WaterworksController/setSocket5/' + value
+                                url: '/index.php/WaterworksController/setOutlet5/' + value
                         	});
                         });
 
@@ -211,7 +227,7 @@
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
                                 method: 'GET',
-                                url: '/index.php/WaterworksController/setSocket6/' + value
+                                url: '/index.php/WaterworksController/setOutlet6/' + value
                         	});
                         });
 
@@ -219,7 +235,7 @@
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
                                 method: 'GET',
-                                url: '/index.php/WaterworksController/setSocket7/' + value
+                                url: '/index.php/WaterworksController/setOutlet7/' + value
                         	});
                         });
 
@@ -227,7 +243,7 @@
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
                                 method: 'GET',
-                                url: '/index.php/WaterworksController/setSocket8/' + value
+                                url: '/index.php/WaterworksController/setOutlet8/' + value
                         	});
                         });
 
@@ -235,7 +251,7 @@
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
                                 method: 'GET',
-                                url: '/index.php/WaterworksController/setRodiAquarium/' + value
+                                url: '/index.php/WaterworksController/setAquariumRodi/' + value
                         	});
                         });
 
@@ -243,7 +259,7 @@
                             var value = pressed ? '1' : '0';
                         	Ext.Ajax.request({
                                 method: 'GET',
-                                url: '/index.php/WaterworksController/setRodiReservoir/' + value
+                                url: '/index.php/WaterworksController/setReservoirRodi/' + value
                         	});
                         });
 
@@ -337,7 +353,7 @@
             	                                var point = [ (new Date()).getTime(), parseFloat(response.pH) ];
             	                                series.addPoint(point, true, true);
             	                            })
-            	                        }, 3000);
+            	                        }, 5000);
             	                    }
             	                }
             	            },
