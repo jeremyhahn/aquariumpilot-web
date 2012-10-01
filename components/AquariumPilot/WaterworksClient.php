@@ -11,160 +11,160 @@
 class WaterworksClient extends ArduinoClient {
 
     /**
-     * Turns on/off the receptacle #1
+     * Turns on/off the receptacle0
 	 *
      * @param $value HIGH or LOW
      * @return void
      * @throws Exception if $value is not a DigitalPinValue
      */
-    public function setOutlet1($value) {
+    public function setReceptacle0($value) {
 
         if(!$this->isDigital($value)) {
             throw new Exception('Value must be either DigitalPinValue::HIGH or DigitalPinValue::LOW');
         }
 
-        $receptacle = json_decode($this->request('/receptacle/1/' . $value));
-        return $receptacle->outlet1;
+        $response = json_decode($this->request('/receptacle/0/' . $value));
+        return $response->receptacle0;
     }
 
     /**
-     * Get the state (ON/OFF) of receptacle #1
+     * Get the state (ON/OFF) of receptacle0
 	 *
      * @return DigitalPinValue::HIGH if the receptacle is "on" or DigitalPinValue::LOW if "off".
      */
-    public function getOutlet1() {
+    public function getReceptacle0() {
 
-        $receptacle = json_decode($this->request('/receptacle/1'));
-        return $receptacle->outlet1;
+        $response = json_decode($this->request('/receptacle/0/' . $value));
+        return $response->receptacle0;
     }
 
     /**
-     * Turns on/off the receptacle #2
+     * Turns on/off the receptacle1
 	 *
      * @param $value HIGH or LOW
      * @return void
      * @throws Exception if $value is not a DigitalPinValue
      */
-    public function setOutlet2($value) {
+    public function setReceptacle1($value) {
         
         if(!$this->isDigital($value)) {
             throw new Exception('Value must be either DigitalPinValue::HIGH or DigitalPinValue::LOW');
         }
 
-        $receptacle = json_decode($this->request('/receptacle/2/' . $value));
-        return $receptacle->outlet2;
+        $response = json_decode($this->request('/receptacle/1/' . $value));
+        return $response->receptacle1;
     }
 
     /**
-     * Get the state (ON/OFF) of receptacle #2
+     * Get the state (ON/OFF) of receptacle1
 	 *
      * @return DigitalPinValue::HIGH if the receptacle is "on" or DigitalPinValue::LOW if "off".
      */
-    public function getOutlet2() {
+    public function getReceptacle1() {
 
-        $receptacle = json_decode($this->request('/receptacle/2'));
-        return $receptacle->outlet2;
+        $response = json_decode($this->request('/receptacle/1/' . $value));
+        return $response->receptacle1;
     }
 
     /**
-     * Turns on/off the receptacle #3
+     * Turns on/off the receptacle2
 	 *
      * @param $value HIGH or LOW
      * @return void
      * @throws Exception if $value is not a DigitalPinValue
      */
-    public function setOutlet3($value) {
+    public function setReceptacle2($value) {
         
         if(!$this->isDigital($value)) {
             throw new Exception('Value must be either DigitalPinValue::HIGH or DigitalPinValue::LOW');
         }
 
-        $receptacle = json_decode($this->request('/receptacle/3/' . $value));
-        return $receptacle->outlet3;
+        $response = json_decode($this->request('/receptacle/2/' . $value));
+        return $response->receptacle2;
     }
 
     /**
-     * Get the state (ON/OFF) of receptacle #3
+     * Get the state (ON/OFF) of receptacle2
 	 *
      * @return DigitalPinValue::HIGH if the receptacle is "on" or DigitalPinValue::LOW if "off".
      */
-    public function getOutlet3() {
+    public function getReceptacle2() {
 
-        $receptacle = json_decode($this->request('/receptacle/3'));
-        return $receptacle->outlet3;
+        $response = json_decode($this->request('/receptacle/2'));
+        return $response->receptacle2;
     }
 
     /**
-     * Turns on/off the receptacle #4
+     * Turns on/off the receptacle3
 	 *
      * @param $value HIGH or LOW
      * @return void
      * @throws Exception if $value is not a DigitalPinValue
      */
-    public function setOutlet4($value) {
+    public function setReceptacle3($value) {
 
         if(!$this->isDigital($value)) {
             throw new Exception('Value must be either DigitalPinValue::HIGH or DigitalPinValue::LOW');
         }
         
-        $receptacle = json_decode($this->request('/receptacle/4/' . $value));
-        return $receptacle->outlet4;
+        $response = json_decode($this->request('/receptacle/3/' . $value));
+        return $receptacle->receptacle3;
     }
 
     /**
-     * Get the state (ON/OFF) of receptacle #4
+     * Get the state (ON/OFF) of receptacle3
 	 *
      * @return DigitalPinValue::HIGH if the receptacle is "on" or DigitalPinValue::LOW if "off".
      */
-    public function getOutlet4() {
+    public function getReceptacle3() {
 
-        $receptacle = json_decode($this->request('/receptacle/4'));
-        return $receptacle->outlet4;
+        $response = json_decode($this->request('/receptacle/3'));
+        return $response->receptacle3;
     }
-    
+
     /**
-     * Turns on/off the receptacle #5
+     * Turns on/off the receptacle4
 	 *
      * @param $value HIGH or LOW
      * @return void
      * @throws Exception if $value is not a DigitalPinValue
      */
-    public function setOutlet5($value) {
+    public function setReceptacle4($value) {
 
         if(!$this->isDigital($value)) {
             throw new Exception('Value must be either DigitalPinValue::HIGH or DigitalPinValue::LOW');
         }
 
-        $receptacle = json_decode($this->request('/receptacle/5/' . $value));
-        return $receptacle->outlet5;
+        $response = json_decode($this->request('/receptacle/4/' . $value));
+        return $response->receptacle4;
     }
 
     /**
-     * Get the state (ON/OFF) of receptacle #5
+     * Get the state (ON/OFF) of receptacle4
 	 *
      * @return DigitalPinValue::HIGH if the receptacle is "on" or DigitalPinValue::LOW if "off".
      */
-    public function getOutlet5() {
+    public function getReceptacle4() {
 
-        $receptacle = json_decode($this->request('/receptacle/5'));
-        return $receptacle->outlet5;
+        $response = json_decode($this->request('/receptacle/4'));
+        return $response->receptacle4;
     }
 
     /**
-     * Turns on/off the receptacle #6
+     * Turns on/off the receptacle5
 	 *
      * @param $value HIGH or LOW
      * @return void
      * @throws Exception if $value is not a DigitalPinValue
      */
-    public function setOutlet6($value) {
+    public function setReceptacle5($value) {
         
         if(!$this->isDigital($value)) {
             throw new Exception('Value must be either DigitalPinValue::HIGH or DigitalPinValue::LOW');
         }
 
-        $receptacle = json_decode($this->request('/receptacle/6/' . $value));
-        return $receptacle->outlet6;
+        $response = json_decode($this->request('/receptacle/5/' . $value));
+        return $response->receptacle5;
     }
 
     /**
@@ -172,66 +172,66 @@ class WaterworksClient extends ArduinoClient {
 	 *
      * @return DigitalPinValue::HIGH if the receptacle is "on" or DigitalPinValue::LOW if "off".
      */
-    public function getOutlet6() {
+    public function getReceptacle5() {
         
-        $receptacle = json_decode($this->request('/receptacle/6'));
-        return $receptacle->outlet6;
+        $response = json_decode($this->request('/receptacle/5'));
+        return $response->receptacle5;
     }
 
     /**
-     * Turns on/off the receptacle #7
+     * Turns on/off the receptacle6
 	 *
      * @param $value HIGH or LOW
      * @return void
      * @throws Exception if $value is not a DigitalPinValue
      */
-    public function setOutlet7($value) {
+    public function setReceptacle6($value) {
 
         if(!$this->isDigital($value)) {
             throw new Exception('Value must be either DigitalPinValue::HIGH or DigitalPinValue::LOW');
         }
 
-        $receptacle = json_decode($this->request('/receptacle/7/' . $value));
-        return $receptacle->outlet7;
+        $response = json_decode($this->request('/receptacle/6/' . $value));
+        return $response->receptacle6;
     }
 
     /**
-     * Get the state (ON/OFF) of receptacle #7
+     * Get the state (ON/OFF) of receptacle6
 	 *
      * @return DigitalPinValue::HIGH if the receptacle is "on" or DigitalPinValue::LOW if "off".
      */
-    public function getOutlet7() {
+    public function getReceptacle6() {
 
-        $receptacle = json_decode($this->request('/receptacle/7'));
-        return $receptacle->outlet7;
+        $response = json_decode($this->request('/receptacle/6'));
+        return $response->receptacle6;
     }
 
     /**
-     * Turns on/off the receptacle #8
+     * Turns on/off the receptacle7
 	 *
      * @param $value HIGH or LOW
      * @return void
      * @throws Exception if $value is not a DigitalPinValue
      */
-    public function setOutlet8($value) {
+    public function setReceptacle7($value) {
 
         if(!$this->isDigital($value)) {
             throw new Exception('Value must be either DigitalPinValue::HIGH or DigitalPinValue::LOW');
         }
 
-        $receptacle = json_decode($this->request('/receptacle/8/' . $value));
-        return $receptacle->outlet8;
+        $response = json_decode($this->request('/receptacle/7/' . $value));
+        return $response->receptacle7;
     }
 
     /**
-     * Get the state (ON/OFF) of receptacle #8
+     * Get the state (ON/OFF) of receptacle8
 	 *
      * @return DigitalPinValue::HIGH if the receptacle is "on" or DigitalPinValue::LOW if "off".
      */
-    public function getOutlet8() {
+    public function getReceptacle7() {
 
-        $receptacle = json_decode($this->request('/receptacle/8'));
-        return $receptacle->outlet8;
+        $response = json_decode($this->request('/receptacle/7'));
+        return $response->receptacle7;
     }
 
     /**

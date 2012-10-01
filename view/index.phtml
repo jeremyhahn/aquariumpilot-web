@@ -63,12 +63,150 @@
                 'Ext.app.ChartPortlet'
             ]);
 
-            Ext.onReady(function(){
+            Ext.onReady(function() {
+
                 Ext.create('Ext.app.Portal');
                 pollWaterworks();
                 renderCharts();
 
                 //Ext.util.CSS.swapStyleSheet('theme', '/view/js/extjs/resources/css/ext-neptune.css');
+
+             	// Set event handlers for button clicks / toggles
+                Ext.getCmp('outlet1').on('toggle', function(button, pressed) {
+                    var value = pressed ? '1' : '0';
+                	Ext.Ajax.request({
+                        method: 'GET',
+                        url: '/index.php/WaterworksController/setReceptacle0/' + value
+                	});
+                });
+
+                Ext.getCmp('outlet2').on('toggle', function(button, pressed) {
+                    var value = pressed ? '1' : '0';
+                	Ext.Ajax.request({
+                        method: 'GET',
+                        url: '/index.php/WaterworksController/setReceptacle1/' + value
+                	});
+                });
+
+                Ext.getCmp('outlet3').on('toggle', function(button, pressed) {
+                    var value = pressed ? '1' : '0';
+                	Ext.Ajax.request({
+                        method: 'GET',
+                        url: '/index.php/WaterworksController/setReceptacle2/' + value
+                	});
+                });
+
+                Ext.getCmp('outlet4').on('toggle', function(button, pressed) {
+                    var value = pressed ? '1' : '0';
+                	Ext.Ajax.request({
+                        method: 'GET',
+                        url: '/index.php/WaterworksController/setReceptacle3/' + value
+                	});
+                });
+
+                Ext.getCmp('outlet5').on('toggle', function(button, pressed) {
+                    var value = pressed ? '1' : '0';
+                	Ext.Ajax.request({
+                        method: 'GET',
+                        url: '/index.php/WaterworksController/setReceptacle4/' + value
+                	});
+                });
+
+                Ext.getCmp('outlet6').on('toggle', function(button, pressed) {
+                    var value = pressed ? '1' : '0';
+                	Ext.Ajax.request({
+                        method: 'GET',
+                        url: '/index.php/WaterworksController/setReceptacle5/' + value
+                	});
+                });
+
+                Ext.getCmp('outlet7').on('toggle', function(button, pressed) {
+                    var value = pressed ? '1' : '0';
+                	Ext.Ajax.request({
+                        method: 'GET',
+                        url: '/index.php/WaterworksController/setReceptacle6/' + value
+                	});
+                });
+
+                Ext.getCmp('outlet8').on('toggle', function(button, pressed) {
+                    var value = pressed ? '1' : '0';
+                	Ext.Ajax.request({
+                        method: 'GET',
+                        url: '/index.php/WaterworksController/setReceptacle7/' + value
+                	});
+                });
+
+                Ext.getCmp('rodiAquarium').on('toggle', function(button, pressed) {
+                    var value = pressed ? '1' : '0';
+                	Ext.Ajax.request({
+                        method: 'GET',
+                        url: '/index.php/WaterworksController/setAquariumRodi/' + value
+                	});
+                });
+
+                Ext.getCmp('rodiReservoir').on('toggle', function(button, pressed) {
+                    var value = pressed ? '1' : '0';
+                	Ext.Ajax.request({
+                        method: 'GET',
+                        url: '/index.php/WaterworksController/setReservoirRodi/' + value
+                	});
+                });
+
+                Ext.getCmp('aquariumDrain').on('toggle', function(button, pressed) {
+                    var value = pressed ? '1' : '0';
+                	Ext.Ajax.request({
+                        method: 'GET',
+                        url: '/index.php/WaterworksController/setAquariumDrain/' + value
+                	});
+                });
+
+                Ext.getCmp('waterchange').on('click', function(button, pressed) {
+                	Ext.Msg.prompt('Water Change', 'How many gallons?', function(btn, text) {
+            		    if (btn == 'ok') {
+            		    	if(isNaN(text)) {
+            		    		Ext.Msg.show({
+            		    		     title:'Error',
+            		    		     msg: 'Number required.',
+            		    		     buttons: Ext.Msg.OK,
+            		    		     icon: Ext.Msg.ERROR
+            		    		});
+            		    		return false;
+            		    	}
+            		    	if(text <= 0) {
+            		    		Ext.Msg.show({
+            		    		     title:'Error',
+            		    		     msg: 'Gallons must be greater than zero.',
+            		    		     buttons: Ext.Msg.OK,
+            		    		     icon: Ext.Msg.ERROR
+            		    		});
+            		    		return false;
+            		    	}
+            		    	Ext.Ajax.request({
+                                method: 'GET',
+                                url: '/index.php/WaterworksController/setWaterchange/' + text,
+                                success: function(result, request) {
+            		    			Ext.getCmp('waterworks-bbar').update('Performing water change...');
+            		    		}
+                        	});
+            		    }
+            		});
+                });
+
+                Ext.getCmp('maintenance').on('toggle', function(button, pressed) {
+                    var value = pressed ? '1' : '0';
+                	Ext.Ajax.request({
+                        method: 'GET',
+                        url: '/index.php/WaterworksController/setMaintenance/' + value
+                	});
+                	if(pressed) {
+      		    	   Ext.getCmp('waterchange').disable();
+      		    	   Ext.getCmp('waterworks-bbar').update('Maintenance mode...');
+                	}
+      		    	else {
+      		    	   Ext.getCmp('waterchange').enable();
+      		    	   Ext.getCmp('waterworks-bbar').update('Ready');
+      		    	}
+                });  
             });
 
             function pollWaterworks() {
@@ -151,17 +289,17 @@
                         console.log(waterworks);
 
                         // Waterworks buttons
-                        if(waterworks.outlet1 == '1') Ext.getCmp('outlet1').toggle(true, true);
-                        if(waterworks.outlet2 == '1') Ext.getCmp('outlet2').toggle(true, true);
-                        if(waterworks.outlet3 == '1') Ext.getCmp('outlet3').toggle(true, true);
-                        if(waterworks.outlet4 == '1') Ext.getCmp('outlet4').toggle(true, true);
-                        if(waterworks.outlet5 == '1') Ext.getCmp('outlet5').toggle(true, true);
-                        if(waterworks.outlet6 == '1') Ext.getCmp('outlet6').toggle(true, true);
-                        if(waterworks.outlet7 == '1') Ext.getCmp('outlet7').toggle(true, true);
-                        if(waterworks.outlet8 == '1') Ext.getCmp('outlet8').toggle(true, true);
-                        if(waterworks.rodiAquariumSolenoid == '1') Ext.getCmp('rodiAquarium').toggle(true, true);
-                        if(waterworks.rodiReservoirSolenoid == '1') Ext.getCmp('rodiReservoir').toggle(true, true);
-                        if(waterworks.aquariumDrainSolenoid == '1') Ext.getCmp('aquariumDrain').toggle(true, true);
+                        if(waterworks.receptacle0 == '1') Ext.getCmp('outlet1').toggle(waterworks.receptacle0 == '1', true);
+                        if(waterworks.receptacle1 == '1') Ext.getCmp('outlet2').toggle(waterworks.receptacle1 == '1', true);
+                        if(waterworks.receptacle2 == '1') Ext.getCmp('outlet3').toggle(waterworks.receptacle2 == '1', true);
+                        if(waterworks.receptacle3 == '1') Ext.getCmp('outlet4').toggle(waterworks.receptacle3 == '1', true);
+                        if(waterworks.receptacle4 == '1') Ext.getCmp('outlet5').toggle(waterworks.receptacle4 == '1', true);
+                        if(waterworks.receptacle5 == '1') Ext.getCmp('outlet6').toggle(waterworks.receptacle5 == '1', true);
+                        if(waterworks.receptacle6 == '1') Ext.getCmp('outlet7').toggle(waterworks.receptacle6 == '1', true);
+                        if(waterworks.receptacle7 == '1') Ext.getCmp('outlet8').toggle(waterworks.receptacle7 == '1', true);
+                        if(waterworks.aquariumRodi == '1') Ext.getCmp('rodiAquarium').toggle(waterworks.aquariumRodi == '1', true);
+                        if(waterworks.reservoirRodi == '1') Ext.getCmp('rodiReservoir').toggle(waterworks.reservoirRodi == '1', true);
+                        if(waterworks.aquariumDrain == '1') Ext.getCmp('aquariumDrain').toggle(waterworks.aquariumDrain == '1', true);
                         if(waterworks.waterChangeInProgress == '1') {
                             Ext.getCmp('waterchange').disable();
                             Ext.getCmp('waterworks-bbar').update('Performing water change...');
@@ -181,143 +319,6 @@
                         thermometer3.Set('chart.scale.decimals', 2);
                         thermometer3.Set('chart.shadow', false);
                         thermometer3.Draw();
-
-                        // Set event handlers for button clicks / toggles
-                        Ext.getCmp('outlet1').on('toggle', function(button, pressed) {
-                            var value = pressed ? '1' : '0';
-                        	Ext.Ajax.request({
-                                method: 'GET',
-                                url: '/index.php/WaterworksController/setOutlet1/' + value
-                        	});
-                        });
-
-                        Ext.getCmp('outlet2').on('toggle', function(button, pressed) {
-                            var value = pressed ? '1' : '0';
-                        	Ext.Ajax.request({
-                                method: 'GET',
-                                url: '/index.php/WaterworksController/setOutlet2/' + value
-                        	});
-                        });
-
-                        Ext.getCmp('outlet3').on('toggle', function(button, pressed) {
-                            var value = pressed ? '1' : '0';
-                        	Ext.Ajax.request({
-                                method: 'GET',
-                                url: '/index.php/WaterworksController/setOutlet3/' + value
-                        	});
-                        });
-
-                        Ext.getCmp('outlet4').on('toggle', function(button, pressed) {
-                            var value = pressed ? '1' : '0';
-                        	Ext.Ajax.request({
-                                method: 'GET',
-                                url: '/index.php/WaterworksController/setOutlet4/' + value
-                        	});
-                        });
-
-                        Ext.getCmp('outlet5').on('toggle', function(button, pressed) {
-                            var value = pressed ? '1' : '0';
-                        	Ext.Ajax.request({
-                                method: 'GET',
-                                url: '/index.php/WaterworksController/setOutlet5/' + value
-                        	});
-                        });
-
-                        Ext.getCmp('outlet6').on('toggle', function(button, pressed) {
-                            var value = pressed ? '1' : '0';
-                        	Ext.Ajax.request({
-                                method: 'GET',
-                                url: '/index.php/WaterworksController/setOutlet6/' + value
-                        	});
-                        });
-
-                        Ext.getCmp('outlet7').on('toggle', function(button, pressed) {
-                            var value = pressed ? '1' : '0';
-                        	Ext.Ajax.request({
-                                method: 'GET',
-                                url: '/index.php/WaterworksController/setOutlet7/' + value
-                        	});
-                        });
-
-                        Ext.getCmp('outlet8').on('toggle', function(button, pressed) {
-                            var value = pressed ? '1' : '0';
-                        	Ext.Ajax.request({
-                                method: 'GET',
-                                url: '/index.php/WaterworksController/setOutlet8/' + value
-                        	});
-                        });
-
-                        Ext.getCmp('rodiAquarium').on('toggle', function(button, pressed) {
-                            var value = pressed ? '1' : '0';
-                        	Ext.Ajax.request({
-                                method: 'GET',
-                                url: '/index.php/WaterworksController/setAquariumRodi/' + value
-                        	});
-                        });
-
-                        Ext.getCmp('rodiReservoir').on('toggle', function(button, pressed) {
-                            var value = pressed ? '1' : '0';
-                        	Ext.Ajax.request({
-                                method: 'GET',
-                                url: '/index.php/WaterworksController/setReservoirRodi/' + value
-                        	});
-                        });
-
-                        Ext.getCmp('aquariumDrain').on('toggle', function(button, pressed) {
-                            var value = pressed ? '1' : '0';
-                        	Ext.Ajax.request({
-                                method: 'GET',
-                                url: '/index.php/WaterworksController/setAquariumDrain/' + value
-                        	});
-                        });
-
-                        Ext.getCmp('waterchange').on('click', function(button, pressed) {
-                        	Ext.Msg.prompt('Water Change', 'How many gallons?', function(btn, text) {
-                    		    if (btn == 'ok') {
-                    		    	if(isNaN(text)) {
-                    		    		Ext.Msg.show({
-                    		    		     title:'Error',
-                    		    		     msg: 'Number required.',
-                    		    		     buttons: Ext.Msg.OK,
-                    		    		     icon: Ext.Msg.ERROR
-                    		    		});
-                    		    		return false;
-                    		    	}
-                    		    	if(text <= 0) {
-                    		    		Ext.Msg.show({
-                    		    		     title:'Error',
-                    		    		     msg: 'Gallons must be greater than zero.',
-                    		    		     buttons: Ext.Msg.OK,
-                    		    		     icon: Ext.Msg.ERROR
-                    		    		});
-                    		    		return false;
-                    		    	}
-                    		    	Ext.Ajax.request({
-                                        method: 'GET',
-                                        url: '/index.php/WaterworksController/setWaterchange/' + text,
-                                        success: function(result, request) {
-                    		    			Ext.getCmp('waterworks-bbar').update('Performing water change...');
-                    		    		}
-                                	});
-                    		    }
-                    		});
-                        });
-
-                        Ext.getCmp('maintenance').on('toggle', function(button, pressed) {
-                            var value = pressed ? '1' : '0';
-                        	Ext.Ajax.request({
-                                method: 'GET',
-                                url: '/index.php/WaterworksController/setMaintenance/' + value
-                        	});
-                        	if(pressed) {
-              		    	   Ext.getCmp('waterchange').disable();
-              		    	   Ext.getCmp('waterworks-bbar').update('Maintenance mode...');
-                        	}
-              		    	else {
-              		    	   Ext.getCmp('waterchange').enable();
-              		    	   Ext.getCmp('waterworks-bbar').update('Ready');
-              		    	}
-                        });  
                     }                      
                 });
 

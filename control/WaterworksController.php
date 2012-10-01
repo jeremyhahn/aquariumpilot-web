@@ -24,52 +24,52 @@ class WaterworksController extends WaterworksClient {
         print_r(JsonToModel::transform(parent::getStatus(), 'Status'));
     }
 
-    public function setOutlet1($value = 0) {
-        parent::setOutlet1($this->toDigital($value));
+    public function setReceptacle0($value = 0) {
+        echo parent::setReceptacle0($this->toDigital($value));
     }
 
-    public function setOutlet2($value = 0) {
-        parent::setOutlet2($this->toDigital($value));
+    public function setReceptacle1($value = 0) {
+        echo parent::setReceptacle1($this->toDigital($value));
     }
     
-    public function setOutlet3($value = 0) {
-        parent::setOutlet3($this->toDigital($value));
+    public function setReceptacle2($value = 0) {
+        echo parent::setReceptacle2($this->toDigital($value));
     }
     
-    public function setOutlet4($value = 0) {
-        parent::setOutlet4($this->toDigital($value));
+    public function setReceptacle3($value = 0) {
+        echo parent::setReceptacle3($this->toDigital($value));
     }
     
-    public function setOutlet5($value = 0) {
-        parent::setOutlet5($this->toDigital($value));
+    public function setReceptacle4($value = 0) {
+        echo parent::setReceptacle4($this->toDigital($value));
     }
     
-    public function setOutlet6($value = 0) {
-        parent::setOutlet6($this->toDigital($value));
+    public function setReceptacle5($value = 0) {
+        echo parent::setReceptacle5($this->toDigital($value));
     }
     
-    public function setOutlet7($value = 0) {
-        parent::setOutlet7($this->toDigital($value));
+    public function setReceptacle6($value = 0) {
+        echo parent::setReceptacle6($this->toDigital($value));
     }
     
-    public function setOutlet8($value = 0) {
-        parent::setOutlet8($this->toDigital($value));
+    public function setReceptacle7($value = 0) {
+        echo parent::setReceptacle7($this->toDigital($value));
     }
     
     public function setAquariumRodi($value = 0) {
-        parent::setAquariumRodi($this->toDigital($value));
+        echo parent::setAquariumRodi($this->toDigital($value));
     }
 
     public function setReservoirRodi($value = 0) {
-        parent::setReservoirRodi($this->toDigital($value));
+        echo parent::setReservoirRodi($this->toDigital($value));
     }
 
     public function setAquariumDrain($value = 0) {
-        parent::setAquariumDrain($this->toDigital($value));
+        echo parent::setAquariumDrain($this->toDigital($value));
     }
 
     public function setMaintenance($value) {
-        parent::setMaintenance($this->toDigital($value));
+        echo parent::setMaintenance($this->toDigital($value));
     }
 
     public function getSystem() {
@@ -81,7 +81,7 @@ class WaterworksController extends WaterworksClient {
     }
 
     private function toDigital($value) {
-        return $value <= 0 ? DigitalPinValue::$LOW: DigitalPinValue::$HIGH;
+        return $value <= 0 ? (int)DigitalPinValue::$LOW: (int)DigitalPinValue::$HIGH;
     }
 }
 ?>
