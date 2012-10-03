@@ -40,7 +40,7 @@ abstract class ArduinoClient {
         $ch = curl_init($request);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        //curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 
         $data = curl_exec($ch);
 

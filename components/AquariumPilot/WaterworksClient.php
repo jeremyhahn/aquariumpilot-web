@@ -108,7 +108,7 @@ class WaterworksClient extends ArduinoClient {
         }
         
         $response = json_decode($this->request('/receptacle/3/' . $value));
-        return $receptacle->receptacle3;
+        return $response->receptacle3;
     }
 
     /**
@@ -307,7 +307,7 @@ class WaterworksClient extends ArduinoClient {
         }
         
         $aquarium = json_decode($this->request('/aquarium/rodi/' . $value));
-        return $aquarium->rodi;
+        return $aquarium->aquariumRodi;
     }
 
     /**
@@ -318,7 +318,7 @@ class WaterworksClient extends ArduinoClient {
     public function getAquariumRodi() {
 
         $aquarium = json_decode($this->request('/aquarium/rodi'));
-        return $aquarium->rodi;
+        return $aquarium->aquariumRodi;
     }
 
     /**
@@ -335,7 +335,7 @@ class WaterworksClient extends ArduinoClient {
         }
         
         $aquarium = json_decode($this->request('/aquarium/fill/' . $value));
-        return $aquarium->fill;
+        return $aquarium->aquariumFill;
     }
 
     /**
@@ -346,7 +346,7 @@ class WaterworksClient extends ArduinoClient {
     public function getAquariumFill() {
 
         $aquarium = json_decode($this->request('/aquarium/fill'));
-        return $aquarium->fill;
+        return $aquarium->aquariumFill;
     }
 
     /**
@@ -362,7 +362,7 @@ class WaterworksClient extends ArduinoClient {
         }
         
         $aquarium = json_decode($this->request('/aquarium/drain/' . $value));
-        return $aquarium->drain;
+        return $aquarium->aquariumDrain;
     }
 
     /**
@@ -373,7 +373,7 @@ class WaterworksClient extends ArduinoClient {
     public function getAquariumDrain() {
 
         $aquarium = json_decode($this->request('/aquarium/drain'));
-        return $aquarium->drain;
+        return $aquarium->aquariumDrain;
     }
 
     /**
@@ -389,7 +389,7 @@ class WaterworksClient extends ArduinoClient {
         }
         
         $reservoir = json_decode($this->request('/reservoir/rodi/' . $value));
-        return $reservoir->rodi;
+        return $reservoir->reservoirRodi;
     }
 
     /**
@@ -400,7 +400,7 @@ class WaterworksClient extends ArduinoClient {
     public function getReservoirRodi() {
 
         $reservoir = json_decode($this->request('/reservoir/rodi'));
-        return $reservoir->rodi;
+        return $reservoir->reservoirRodi;
     }
 
     /**
@@ -416,7 +416,7 @@ class WaterworksClient extends ArduinoClient {
         }
 
         $reservoir = json_decode($this->request('/reservoir/powerhead/' . $value));
-        return $reservoir->powerhead;
+        return $reservoir->reservoirPowerhead;
     }
 
     /**
@@ -431,7 +431,7 @@ class WaterworksClient extends ArduinoClient {
         }
 
         $reservoir = json_decode($this->request('/reservoir/powerhead'));
-        return $reservoir->powerhead;
+        return $reservoir->reservoirPowerhead;
     }
 
     /**
@@ -449,7 +449,8 @@ class WaterworksClient extends ArduinoClient {
      * Returns the system variables / values
      */
     public function getSystem() {
-        return JsonToModel::transform($this->request('/system'), 'System');
+        //return JsonToModel::transform($this->request('/system'), 'System');
+        return $this->request('/system');
     }
 
     /**
